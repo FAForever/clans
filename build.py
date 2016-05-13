@@ -4,7 +4,7 @@ import os, shutil
 
 env = Environment(loader=FileSystemLoader('templates'))
 
-pages = ['index', 'clans', 'clan_page', 'clan_members']
+pages = ['index', 'clans', 'clan', 'clan_members']
 
 if (os.path.isdir('dist')):
     shutil.rmtree('dist')

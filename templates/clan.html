@@ -79,7 +79,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
   $.ajax({
-      url: 'http://test.faforever.com:2000/clan/{{ clan_id }}',
+      url: 'http://test.faforever.com:2000/clan/' + window.location.hash.substring(1),
       dataType: 'json',
       cache: false,
       success: function(data) {
