@@ -2,15 +2,15 @@
 
 New Clan App based on the FAF API
 
-# Installation
+# Installation - without docker
 
 1. Install node
 2. Run `npm install`
 
-# Development Mode
+# Development Server
 
 You can run the development server with
 
-    npm start
+    npm run dev
     
 Visit http://localhost:8080/ to see the app.
