@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/FAForever/clans.svg)](https://travis-ci.org/FAForever/clans)
+
 New Clan App based on the FAF API
 
 # Installation
