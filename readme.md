@@ -14,8 +14,8 @@ by Ze_PilOt (main developer of FAF): http://www.faforever.com/forums/viewtopic.p
 At the time there was no API or way to access the player information on the FAF server from a separate application.
 So after completing all of the basic application functionality in a sandbox environment, 
 Brendan Hart was unable to integrate with the server, and the project was abandonded in October 2013. 
-Dragonfire and others used the incomplete source code from Brendan Hart's Bitbucket, and Dragonfire 
-finished the application in 2014 and integrate it with a new "faftools" API created by Ze_PilOt.
+Dragonfire used the incomplete source code from Brendan Hart's Bitbucket and finished the application in 2014 before the ownership of FAForver changes and Ze_PilOt leaves FAF.
+Since the new ownership the php application is no longer maintained, because the API https://github.com/FAForever/api in combination with a modern javascript web app should replace it...
 
 ## Installation Guide
 
