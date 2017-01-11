@@ -9,10 +9,13 @@ Forum-Thread: http://www.faforever.com/forums/viewtopic.php?f=45&t=6618
 
 This application was orginally designed by Brendan Hart and distributed on Bitbucket: 
 https://bitbucket.org/hartbren/faf_clans_webapp
-Application supposed to fulfill goals of Quest for Webcoders that was organized by Ze_PilOt (main developer of FAF):
-http://www.faforever.com/forums/viewtopic.php?f=2&t=2881
-Brendan Hart disappeared without single word in October 2013. We decided to finish application.
-Dragonfire finished the application 2014 and integrate it with Ze_PilOt.
+Application supposed to fulfill goals of Quest for Webcoders that was organized 
+by Ze_PilOt (main developer of FAF): http://www.faforever.com/forums/viewtopic.php?f=2&t=2881
+At the time there was no API or way to access the player information on the FAF server from a separate application.
+So after completing all of the basic application functionality in a sandbox environment, 
+Brendan Hart was unable to integrate with the server, and the project was abandonded in October 2013. 
+Dragonfire and others used the incomplete source code from Brendan Hart's Bitbucket, and Dragonfire 
+finished the application in 2014 and integrate it with a new "faftools" API created by Ze_PilOt.
 
 ## Installation Guide
 
