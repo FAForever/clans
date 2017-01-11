@@ -50,6 +50,7 @@ export default class TransferLeadership extends React.Component {
         if(newLeader) {
             return newLeader.player.login;
         }
+        Toast.getContainer().error('Is the new leader still a clan member?', 'Cannot find new Leader');
         return null;
 
     }

@@ -65,7 +65,7 @@ export default {
         return user;
     },
     getPlayer() {
-         if(user != null && user.player != null) {
+        if(user != null && user.player != null) {
             return user.player;
         }
         return null;
