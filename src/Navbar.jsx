@@ -1,9 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router';
+import {ToastMessage, ToastContainer} from 'react-toastr'; 
 
 import Session from './utils/Session.jsx';
+import Toast from './utils/Toast.jsx';
+
+let ToastMessageFactory = React.createFactory(ToastMessage.animation);
 
 export default class NavBar extends React.Component {
+    login() {
+        let clientId = '83891c0c-feab-42e1-9ca7-515f94f808ef';
+    //let url = 'https://japi.test.faforever.com';
+        let url = 'http://localhost:5000';
+        let redirect_uri = 'http://localhost:8080';
+
+        window.location = `${url}/oauth/authorize?response_type=token&client_id=${clientId}&redirect_uri=${redirect_uri}`;
+    }
+
+    componentDidUpdate() {
+        Toast.setToast(this.refs.container);
+    }
 
     componentDidMount() {
         Session.addListener(function() {
@@ -26,7 +42,6 @@ export default class NavBar extends React.Component {
         return <li><p className="navbar-text" onClick={Session.login}>Login</p></li>;
     }
 
-
     render() {
         return (
       <nav className="navbar navbar-default navbar-fixed-top">
@@ -48,9 +63,13 @@ export default class NavBar extends React.Component {
             <li><Link to="/clans" activeClassName="active">Clans</Link></li>
           </ul>
           <ul className="nav navbar-nav navbar-right">
-             { this.renderUserData() } { this.renderLogin() }
+            <li><a href="#">My Clan</a></li>
+            <li><p className="navbar-text" onClick={this.login.bind(this)}>Login</p></li>
           </ul>
         </div>
+        <ToastContainer ref="container"
+                  toastMessageFactory={ToastMessageFactory}
+                  className="toast-top-center" />
       </div>
     </nav>
         );

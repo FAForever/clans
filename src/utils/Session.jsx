@@ -64,6 +64,12 @@ export default {
     getUser() {
         return user;
     },
+    getPlayer() {
+         if(user != null && user.player != null) {
+            return user.player;
+        }
+        return null;
+    },
     getPlayername() {
         if(user != null && user.player != null) {
             return user.player.login;

@@ -4,16 +4,17 @@ import { hashHistory } from 'react-router';
 
 import Page from './Page.jsx';
 import InputPair from './InputPair.jsx';
+import Toast from './utils/Toast.jsx';
+import Session from './utils/Session.jsx';
 
 import _ from 'lodash';
-
 
 export default class TransferLeadership extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             clan: null,
-            confirmName: null
+            confirmName: ''
         };
     }
 
@@ -21,6 +22,13 @@ export default class TransferLeadership extends React.Component {
         Api.one('clan', this.props.params.clanid).get({ include: 'memberships,leader,memberships.player' })
             .then(this.setData.bind(this)).catch(error => console.error(error));
     }
+
+    componentDidUpdate() {
+        if(Session.getPlayer() && this.props.params.playerid == Session.getPlayer().id) {
+            Toast.getContainer().error('You are already the Leader');
+        }
+    }
+
     setData(data) {
         console.log(data);
         this.setState({clan: data});
@@ -46,8 +54,8 @@ export default class TransferLeadership extends React.Component {
 
     }
 
-    confirm() {
-        return this.getNewLeaderName() != this.state.confirmName;
+    submitDisabled() {
+        return this.state.confirmName == '' || this.getNewLeaderName() != this.state.confirmName;
     }
 
     renderData() {
@@ -72,11 +80,10 @@ export default class TransferLeadership extends React.Component {
                         <InputPair label="New Leader" value={this.state.confirmName} onChange={this.onNewLeaderChange.bind(this)} />
                         <p/>
                         <div className="grid">
-                            <button disabled={this.confirm()} onClick={this.transferLeadership} className="col-1-2 btn btn-default btn-lg">Transfer Leadership</button>
+                            <button disabled={this.submitDisabled()} onClick={this.transferLeadership} className="col-1-2 btn btn-default btn-lg">Transfer Leadership</button>
                             <button onClick={hashHistory.goBack} className="col-1-2 btn btn-default btn-lg">Stay Leader</button>
                         </div>
                     </div>
-                    
                 </div>;
     }
 
