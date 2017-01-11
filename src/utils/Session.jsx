@@ -1,26 +1,40 @@
 import axios from 'axios';
 import { Api } from './Api.jsx';
 
+import ClientOAuth2 from 'client-oauth2';
+
 const clientId = '83891c0c-feab-42e1-9ca7-515f94f808ef';
 const url = 'http://localhost:5000';
-const redirect_uri = 'http://localhost:8080';
+const redirect_uri = 'http://localhost:8080/';
 
-let user =  JSON.parse(localStorage.getItem('user'));
-let token = localStorage.getItem('token');
+const oauth = new ClientOAuth2( {
+    clientId: clientId,
+    authorizationUri: `${url}/oauth/authorize`,
+    redirectUri: redirect_uri
+});
+let token;
+let user;
+try {
+    user =  JSON.parse(localStorage.getItem('user'));
+    token = JSON.parse(localStorage.getItem('token'));
+} catch(err) {
+    console.log(err);
+}
+console.log(token);
 if(token) {
     registerTokenIntern(token);
 }
 
 function registerTokenIntern(newToken) {
     token = newToken;
-    localStorage.setItem('token', token);
-    Api.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+    localStorage.setItem('token', JSON.stringify(token));
+    Api.headers['Authorization'] = `Bearer ${token.access_token}`;
     grabUserData(token);
 }
 
 function grabUserData(token) {
     axios.get('http://localhost:5000/clans/me', 
-            {headers: { Authorization: `Bearer ${token}`}})
+            {headers: { Authorization: `Bearer ${token.access_token}`}})
             .then(function (response) {
                 user = response.data;
                 localStorage.setItem('user', JSON.stringify(user));
@@ -40,6 +54,9 @@ function dataChanged() {
 }
 
 export default {
+    getToken() {
+        return token.access_token;
+    },
     getUser() {
         return user;
     },
@@ -53,7 +70,10 @@ export default {
         return token != null;
     },
     login() {
-        window.location = `${url}/oauth/authorize?response_type=token&client_id=${clientId}&redirect_uri=${redirect_uri}`;
+            
+            
+            // Open the page in a new window, then redirect back to a page that calls our global `oauth2Callback` function. 
+        window.open(oauth.token.getUri(), '_self');
         dataChanged();
     },
     logout() {
@@ -69,5 +89,6 @@ export default {
     },
     addListener(callback) {
         listeners.push(callback);
-    }
+    },
+    oauth
 };
