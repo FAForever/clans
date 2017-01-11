@@ -1,7 +1,6 @@
 import JsonApi from 'devour-client';
 
 let jsonApi = new JsonApi({
-  //apiUrl: 'https://japi.test.faforever.com/data',
     apiUrl: 'http://localhost:5000/data',
     pluralize: false
 });
@@ -41,8 +40,8 @@ jsonApi.define('clan_membership', {
 
 jsonApi.define('player', {
     login: '',
-    eMail: ''
-    // Bug in Devour: https://github.com/twg/devour/issues/47
+    eMail: '',
+    //Bug in Devour: https://github.com/twg/devour/issues/47
     // clanMemberships: {
     //     jsonApi: 'hasMany',
     //     type: 'clan_membership'

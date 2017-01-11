@@ -4,9 +4,9 @@ export default class InputPair extends React.Component {
     
     render() {
         return (
-            <div className="input-group input-group-sm">
-                <span className="input-group-addon" id={this.props.label}>{this.props.label}</span>
-                <input disabled={this.props.disabled} type="text" className="form-control" onChange={this.props.onChange} value={this.props.value || ''} aria-describedby={this.props.label} />
+            <div className="grid ">
+                <span className="col-1-6" id={this.props.label}>{this.props.label}</span>
+                <input disabled={this.props.disabled} type="text" className="col-5-6" onChange={this.props.onChange} value={this.props.value || ''} aria-describedby={this.props.label} />
             </div>
         );
     }

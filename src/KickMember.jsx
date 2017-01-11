@@ -8,6 +8,7 @@ import Page from './Page.jsx';
 import InputPair from './InputPair.jsx';
 
 import Utils from './utils/Utils.jsx';
+import Session from './utils/Session.jsx';
 
 
 export default class KickMember extends React.Component {
@@ -30,7 +31,7 @@ export default class KickMember extends React.Component {
     kickMember() {
         axios.post(`http://localhost:5000/clans/kick?membershipId=${this.props.params.membershipid}`,
             null,
-            { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+            { headers: { Authorization: `Bearer ${Session.getToken()}` } })
             .then(function () {
                 hashHistory.goBack();
             })

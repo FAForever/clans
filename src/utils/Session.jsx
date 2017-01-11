@@ -16,11 +16,15 @@ let token;
 let user;
 try {
     user =  JSON.parse(localStorage.getItem('user'));
+} catch(err) {
+    console.log(err);
+}
+try {
     token = JSON.parse(localStorage.getItem('token'));
 } catch(err) {
     console.log(err);
 }
-console.log(token);
+
 if(token) {
     registerTokenIntern(token);
 }

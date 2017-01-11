@@ -2,6 +2,7 @@ import React from 'react';
 import { hashHistory } from 'react-router';
 
 import Utils from './utils/Utils.jsx';
+import Session from './utils/Session.jsx';
 
 import Page from './Page.jsx';
 import InputPair from './InputPair.jsx';
@@ -43,7 +44,7 @@ export default class CreateClan extends React.Component {
             <InputPair disabled={true} label="Leader" value="You" />
             <InputPair disabled={true} label="Founder" value="You" />
             <InputPair disabled={true} label="Created At:" value={Utils.formatTimestamp(null)} />
-            <textarea className="form-control" value={this.state.description} onChange={this.onDescChange.bind(this)} />
+            <textarea value={this.state.description} onChange={this.onDescChange.bind(this)} />
             <button onClick={this.submitData.bind(this)} className="btn btn-default btn-lg">Create New Clan</button>
         </div>;
     }
@@ -54,7 +55,7 @@ export default class CreateClan extends React.Component {
         params += `&description=${encodeURIComponent(this.state.description)}`;
         axios.post(`http://localhost:5000/clans/create?${params}`, 
         null, 
-        {headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}})
+        { headers: { Authorization: `Bearer ${Session.getToken()}` } })
         .then(function (response) {
             hashHistory.push(`/clan/${response.data.id}`);
         })

@@ -24,11 +24,13 @@
     "css-loader": "^0.26.0",
     "devour-client": "^1.4.0",
     "express": "^4.14.0",
+    "lodash": "^4.17.4",
     "node-sass": "^3.13.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-router": "^3.0.0",
     "sass-loader": "^4.0.2",
+    "simple-grid2": "^1.0.1",
     "webpack": "^1.13.3"
   }
 }

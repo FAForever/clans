@@ -25,7 +25,8 @@ export default class ClanPage extends React.Component {
         }
         var dataSet = [];
         for (let membership of this.state.clan.memberships) {
-            let button = `<a href="#action/kick/${membership.id}" class="btn btn-primary btn-xs">Kick Member</a><a href="#" class="btn btn-primary btn-xs">Make Founder</a>`;
+            let button =`<a href="#/action/kick/${membership.id}" class="btn btn-primary btn-xs">Kick Member</a>`;
+            button += `<a href="#/action/transferLeadership/${this.state.clan.id}/${membership.player.id}" class="btn btn-primary btn-xs">Make Founder</a>`;
             dataSet.push([membership.player.login, Utils.formatTimestamp(membership.createTime), button]);
         }
          // eslint-disable-next-line no-undef
@@ -53,10 +54,11 @@ export default class ClanPage extends React.Component {
     renderClanData() {
         return <div className="well bs-component">
       <InputPair disabled={true} label="Tag" value={this.state.clan.tag} />
+      <InputPair disabled={true} label="Tag" value={this.state.clan.name} />
       <InputPair disabled={true} label="Leader" value={this.state.clan.leader.login} />
       <InputPair disabled={true} label="Founder" value={this.state.clan.founder.login} />
       <InputPair disabled={true} label="Created At:" value={Utils.formatTimestamp(this.state.clan.createTime)} />
-      <textarea disabled className="form-control" value={this.state.clan.description || ''} />
+      <textarea  disabled value={this.state.clan.description || ''} />
     </div>;
     }
 
