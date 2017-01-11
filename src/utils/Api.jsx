@@ -1,4 +1,7 @@
 import JsonApi from 'devour-client';
+import axios from 'axios';
+
+import Session from './Session.jsx';
 
 let jsonApi = new JsonApi({
     apiUrl: 'http://localhost:5000/data',
@@ -48,8 +51,17 @@ jsonApi.define('player', {
     // }
 });
 
-const Api = jsonApi;
-
-export {
-  Api
+export default {
+    post(url, sucessCallback) {
+        axios.post(`http://localhost:5000/${url}`, 
+        null, 
+        { headers: { Authorization: `Bearer ${Session.getToken()}` } })
+        .then(sucessCallback)
+        .catch(function (error) {
+            console.log(error);
+        });
+    },
+    json() {
+        return jsonApi;
+    }
 };

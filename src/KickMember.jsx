@@ -1,5 +1,5 @@
 import React from 'react';
-import { Api } from './utils/Api.jsx';
+import Api from './utils/Api.jsx';
 import { hashHistory } from 'react-router';
 import axios from 'axios';
 
@@ -8,8 +8,6 @@ import Page from './Page.jsx';
 import InputPair from './InputPair.jsx';
 
 import Utils from './utils/Utils.jsx';
-import Session from './utils/Session.jsx';
-
 
 export default class KickMember extends React.Component {
     constructor(props) {
@@ -20,7 +18,7 @@ export default class KickMember extends React.Component {
     }
 
     componentDidMount() {
-        Api.one('clan_membership', this.props.params.membershipid).get({ include: 'player,clan' })
+        Api.json().one('clan_membership', this.props.params.membershipid).get({ include: 'player,clan' })
             .then(this.setData.bind(this)).catch(error => console.error(error));
     }
 
@@ -29,15 +27,9 @@ export default class KickMember extends React.Component {
     }
 
     kickMember() {
-        axios.post(`http://localhost:5000/clans/kick?membershipId=${this.props.params.membershipid}`,
-            null,
-            { headers: { Authorization: `Bearer ${Session.getToken()}` } })
-            .then(function () {
-                hashHistory.goBack();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        Api.post(`clans/kick?membershipId=${this.props.params.membershipid}`,function () {
+            hashHistory.goBack();
+        });
     }
 
     renderMembership() {

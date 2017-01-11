@@ -2,12 +2,10 @@ import React from 'react';
 import { hashHistory } from 'react-router';
 
 import Utils from './utils/Utils.jsx';
-import Session from './utils/Session.jsx';
+import Api from './utils/Api.jsx';
 
 import Page from './Page.jsx';
 import InputPair from './InputPair.jsx';
-
-import axios from 'axios';
 
 export default class CreateClan extends React.Component {
     constructor(props) {
@@ -53,14 +51,8 @@ export default class CreateClan extends React.Component {
         console.log(this.state);
         let params = `tag=${encodeURIComponent(this.state.tag)}&name=${encodeURIComponent(this.state.name)}`;
         params += `&description=${encodeURIComponent(this.state.description)}`;
-        axios.post(`http://localhost:5000/clans/create?${params}`, 
-        null, 
-        { headers: { Authorization: `Bearer ${Session.getToken()}` } })
-        .then(function (response) {
+        Api.post(`clans/create?${params}`, function(response) {
             hashHistory.push(`/clan/${response.data.id}`);
-        })
-        .catch(function (error) {
-            console.log(error);
         });
     }
 

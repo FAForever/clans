@@ -1,5 +1,5 @@
 import React from 'react';
-import { Api } from './utils/Api.jsx';
+import Api from './utils/Api.jsx';
 import { hashHistory } from 'react-router';
 
 import Page from './Page.jsx';
@@ -19,18 +19,17 @@ export default class TransferLeadership extends React.Component {
     }
 
     componentDidMount() {
-        Api.one('clan', this.props.params.clanid).get({ include: 'memberships,leader,memberships.player' })
+        Api.json().one('clan', this.props.params.clanid).get({ include: 'memberships,leader,memberships.player' })
             .then(this.setData.bind(this)).catch(error => console.error(error));
     }
 
     componentDidUpdate() {
-        if(Session.getPlayer() && this.props.params.playerid == Session.getPlayer().id) {
+        if(Session.getPlayer() && this.props.params.newleaderid == Session.getPlayer().id) {
             Toast.getContainer().error('You are already the Leader');
         }
     }
 
     setData(data) {
-        console.log(data);
         this.setState({clan: data});
     }
 
@@ -39,14 +38,15 @@ export default class TransferLeadership extends React.Component {
     }
 
     transferLeadership() {
-        console.log('transferLeadership');
-        hashHistory.goBack();
+        Api.post(`clans/transferLeadership?clanId=${this.state.clan.id}&newLeaderId=${this.props.params.newleaderid}`, function() {
+            hashHistory.goBack();
+        });
     }
 
     getNewLeaderName() {
-        var playerid = this.props.params.playerid;
+        var newleaderid = this.props.params.newleaderid;
         let newLeader = _.find(this.state.clan.memberships, function(m) { 
-            return m.player.id == playerid;}.bind(this));
+            return m.player.id == newleaderid;}.bind(this));
         if(newLeader) {
             return newLeader.player.login;
         }
@@ -81,7 +81,7 @@ export default class TransferLeadership extends React.Component {
                         <InputPair label="New Leader" value={this.state.confirmName} onChange={this.onNewLeaderChange.bind(this)} />
                         <p/>
                         <div className="grid">
-                            <button disabled={this.submitDisabled()} onClick={this.transferLeadership} className="col-1-2 btn btn-default btn-lg">Transfer Leadership</button>
+                            <button disabled={this.submitDisabled()} onClick={this.transferLeadership.bind(this)} className="col-1-2 btn btn-default btn-lg">Transfer Leadership</button>
                             <button onClick={hashHistory.goBack} className="col-1-2 btn btn-default btn-lg">Stay Leader</button>
                         </div>
                     </div>

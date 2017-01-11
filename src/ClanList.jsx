@@ -1,5 +1,5 @@
 import React from 'react';
-import { Api } from './utils/Api.jsx';
+import Api from './utils/Api.jsx';
 
 import Page from './Page.jsx';
 
@@ -9,15 +9,16 @@ export default class ClanList extends React.Component {
         this.state = {
             list: null
         };
+        this.updated = false; // prevent DatTable to reinit if you visit the page again
     }
 
     componentDidMount() {
-        Api.all('clan').get({ include: 'founder,leader,memberships' })
+        Api.json().all('clan').get({ include: 'founder,leader,memberships' })
       .then(this.setData.bind(this)).catch(error => console.error(error));
     }
 
     componentDidUpdate() {
-        if(!this.state.list) {
+        if(!this.state.list|| this.updated) {
             return;
         }
         var dataSet = [];
@@ -29,6 +30,7 @@ export default class ClanList extends React.Component {
         $('#clanlist').DataTable({
             data: dataSet
         });
+        this.updated = true;
     }
 
     setData(data) {
@@ -44,16 +46,16 @@ export default class ClanList extends React.Component {
 
     renderData() {
         return <table id="clanlist" className="table table-striped table-bordered" cellSpacing="0" width="100%">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Tag</th>
-          <th>Leader</th>
-          <th>Members</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-    </table>;
+                <thead>
+                    <tr>
+                    <th>Name</th>
+                    <th>Tag</th>
+                    <th>Leader</th>
+                    <th>Members</th>
+                    <th>Actions</th>
+                    </tr>
+                </thead>
+                </table>;
     }
 
     render2() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Api } from './utils/Api.jsx';
+import Api from './utils/Api.jsx';
 import Utils from './utils/Utils.jsx';
 
 import Page from './Page.jsx';
@@ -15,7 +15,7 @@ export default class ClanPage extends React.Component {
     }
 
     componentDidMount() {
-        Api.one('clan', this.props.params.clanid).get({ include: 'memberships,memberships.player,founder,leader' })
+        Api.json().one('clan', this.props.params.clanid).get({ include: 'memberships,memberships.player,founder,leader' })
       .then(this.setData.bind(this)).catch(error => console.error(error));
     }
 

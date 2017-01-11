@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Api } from './Api.jsx';
+import Api from './Api.jsx';
 
 import ClientOAuth2 from 'client-oauth2';
 
@@ -32,7 +32,7 @@ if(token) {
 function registerTokenIntern(newToken) {
     token = newToken;
     localStorage.setItem('token', JSON.stringify(token));
-    Api.headers['Authorization'] = `Bearer ${token.access_token}`;
+    Api.json().headers['Authorization'] = `Bearer ${token.access_token}`;
     grabUserData(token);
 }
 
@@ -91,7 +91,7 @@ export default {
         user = null;
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        Api.headers['Authorization'] = null;
+        Api.json().headers['Authorization'] = null;
         dataChanged();
     },
     registerToken(token) {

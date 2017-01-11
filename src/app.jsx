@@ -26,7 +26,7 @@ ReactDOM.render(
         <Route path="/clan/:clanid" component={ClanPage} />
         <Route path="/action/create_clan" component={CreateClan} />
         <Route path="/action/kick/:membershipid" component={KickMember} />
-        <Route path="/action/transferLeadership/:clanid/:playerid" component={TransferLeadership} />
+        <Route path="/action/transferLeadership/:clanid/:newleaderid" component={TransferLeadership} />
       </Route>
     </Router>,
     document.getElementById('app')
