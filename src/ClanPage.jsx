@@ -9,8 +9,9 @@ export default class ClanPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            clan: null
+            clan: null,
         };
+        this.updated = false; // prevent DatTable to reinit if you visit the page again
     }
 
     componentDidMount() {
@@ -19,7 +20,7 @@ export default class ClanPage extends React.Component {
     }
 
     componentDidUpdate() {
-        if (!this.state.clan) {
+        if (!this.state.clan || this.updated) {
             return;
         }
         var dataSet = [];
@@ -31,6 +32,7 @@ export default class ClanPage extends React.Component {
         $('#clan_members').DataTable({
             data: dataSet
         });
+        this.updated = true;
     }
 
     setData(data) {
