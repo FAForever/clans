@@ -63,8 +63,7 @@ export default class NavBar extends React.Component {
             <li><Link to="/clans" activeClassName="active">Clans</Link></li>
           </ul>
           <ul className="nav navbar-nav navbar-right">
-            <li><a href="#">My Clan</a></li>
-            <li><p className="navbar-text" onClick={this.login.bind(this)}>Login</p></li>
+             { this.renderUserData() } { this.renderLogin() }
           </ul>
         </div>
         <ToastContainer ref="container"
