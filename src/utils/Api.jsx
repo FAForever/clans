@@ -52,6 +52,14 @@ jsonApi.define('player', {
 });
 
 export default {
+    get(url, sucessCallback) {
+        axios.get(`http://localhost:5000/${url}`, 
+        { headers: { Authorization: `Bearer ${Session.getToken()}` } })
+        .then(sucessCallback)
+        .catch(function (error) {
+            console.log(error);
+        });
+    },
     post(url, sucessCallback) {
         axios.post(`http://localhost:5000/${url}`, 
         null, 

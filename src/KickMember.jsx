@@ -1,8 +1,6 @@
 import React from 'react';
 import Api from './utils/Api.jsx';
 import { hashHistory } from 'react-router';
-import axios from 'axios';
-
 
 import Page from './Page.jsx';
 import InputPair from './InputPair.jsx';
