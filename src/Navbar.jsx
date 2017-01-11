@@ -1,15 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-export default class NavBar extends React.Component {
-    login() {
-        let clientId = '83891c0c-feab-42e1-9ca7-515f94f808ef';
-    //let url = 'https://japi.test.faforever.com';
-        let url = 'http://localhost:5000';
-        let redirect_uri = 'http://localhost:8080';
+import Session from './utils/Session.jsx';
 
-        window.location = `${url}/oauth/authorize?response_type=token&client_id=${clientId}&redirect_uri=${redirect_uri}`;
+export default class NavBar extends React.Component {
+
+    componentDidMount() {
+        Session.addListener(function() {
+            this.forceUpdate();
+        }.bind(this));
     }
+
+
+    renderUserData() {
+        if(Session.getUser() && Session.getUser().clan) {
+            let clan = Session.getUser().clan;
+            return <li><Link to={`/clan/${clan.id}`} activeClassName="active">My Clan: {clan.tag}</Link></li>;
+        }
+    }
+
+    renderLogin() {
+        if(Session.loggedIn()) {
+            return <li><p className="navbar-text" onClick={Session.logout}>Logout: {Session.getPlayername() || ''}</p></li>;
+        }
+        return <li><p className="navbar-text" onClick={Session.login}>Login</p></li>;
+    }
+
 
     render() {
         return (
@@ -32,8 +48,7 @@ export default class NavBar extends React.Component {
             <li><Link to="/clans" activeClassName="active">Clans</Link></li>
           </ul>
           <ul className="nav navbar-nav navbar-right">
-            <li><a href="#">My Clan</a></li>
-            <li><p className="navbar-text" onClick={this.login.bind(this)}>Login</p></li>
+             { this.renderUserData() } { this.renderLogin() }
           </ul>
         </div>
       </div>

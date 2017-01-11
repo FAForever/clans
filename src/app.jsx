@@ -12,6 +12,8 @@ import KickMember from './KickMember.jsx';
 import './table.scss';
 import './main.scss';
 
+import './utils/Session.jsx';
+
 
 ReactDOM.render(
     <Router history={hashHistory }>

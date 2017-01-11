@@ -5,7 +5,6 @@ let jsonApi = new JsonApi({
     apiUrl: 'http://localhost:5000/data',
     pluralize: false
 });
-jsonApi.headers['Accept'] = 'application/json';
 
 jsonApi.define('clan', {
     description: '',
@@ -43,6 +42,11 @@ jsonApi.define('clan_membership', {
 jsonApi.define('player', {
     login: '',
     eMail: ''
+    // Bug in Devour: https://github.com/twg/devour/issues/47
+    // clanMemberships: {
+    //     jsonApi: 'hasMany',
+    //     type: 'clan_membership'
+    // }
 });
 
 const Api = jsonApi;

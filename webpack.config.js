@@ -19,7 +19,7 @@ const sassLoader = {
 };
 
 var config = {
-  entry: APP_DIR + '/app.jsx',
+  entry: APP_DIR + '/App.jsx',
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js'

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Api } from './api.jsx';
-import Utils from './utils.jsx';
+import { Api } from './utils/Api.jsx';
+import Utils from './utils/Utils.jsx';
 
 import Page from './Page.jsx';
 import InputPair from './InputPair.jsx';

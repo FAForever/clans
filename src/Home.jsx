@@ -2,7 +2,7 @@ import React from 'react';
 import { Link,hashHistory } from 'react-router';
 
 import Page from './Page.jsx';
-import { Api } from './api.jsx';
+import Session from './utils/Session.jsx';
 
 export default class Home extends React.Component {
     componentDidMount() {
@@ -14,15 +14,9 @@ export default class Home extends React.Component {
             duration: 5000 // Effect duration
         });
         if(this.props.params.token) {
-            localStorage.setItem('token', this.props.params.token);
-            Api.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+            Session.registerToken(this.props.params.token);
             hashHistory.push('');
         }
-        Api.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-        Api.one('player', 1).get().then(function(data) {
-            console.log(data);
-        }).catch(error => console.error(error));
-        
     }
     render() {
         return (

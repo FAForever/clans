@@ -1,5 +1,5 @@
 import React from 'react';
-import { Api } from './api.jsx';
+import { Api } from './utils/Api.jsx';
 
 import Page from './Page.jsx';
 
