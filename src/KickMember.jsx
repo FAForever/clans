@@ -1,6 +1,6 @@
 import React from 'react';
 import Api from './utils/Api.jsx';
-import { hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 
 import Page from './Page.jsx';
 import InputPair from './InputPair.jsx';
@@ -26,7 +26,7 @@ export default class KickMember extends React.Component {
 
     kickMember() {
         Api.post(`clans/kick?membershipId=${this.props.params.membershipid}`,function () {
-            hashHistory.goBack();
+            browserHistory.goBack();
         });
     }
 
@@ -39,7 +39,7 @@ export default class KickMember extends React.Component {
                                 <div onClick={this.kickMember.bind(this)} className="btn btn-default btn-lg">
                                     Kick Member
                                 </div>
-                                 <div onClick={hashHistory.goBack}className="btn btn-default btn-lg">
+                                 <div onClick={browserHistory.goBack}className="btn btn-default btn-lg">
                                    Return to Clanpage
                                 </div>
                             </div>

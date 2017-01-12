@@ -1,6 +1,6 @@
 import React from 'react';
 import Api from './utils/Api.jsx';
-import { hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 
 import Page from './Page.jsx';
 import InputPair from './InputPair.jsx';
@@ -39,7 +39,7 @@ export default class TransferLeadership extends React.Component {
 
     transferLeadership() {
         Api.post(`clans/transferLeadership?clanId=${this.state.clan.id}&newLeaderId=${this.props.params.newleaderid}`, function() {
-            hashHistory.goBack();
+            browserHistory.goBack();
         });
     }
 
@@ -82,7 +82,7 @@ export default class TransferLeadership extends React.Component {
                         <p/>
                         <div className="grid">
                             <button disabled={this.submitDisabled()} onClick={this.transferLeadership.bind(this)} className="col-1-2 btn btn-default btn-lg">Transfer Leadership</button>
-                            <button onClick={hashHistory.goBack} className="col-1-2 btn btn-default btn-lg">Stay Leader</button>
+                            <button onClick={browserHistory.goBack} className="col-1-2 btn btn-default btn-lg">Stay Leader</button>
                         </div>
                     </div>
                 </div>;

@@ -7,7 +7,7 @@ var PORT = 8080;
 
 
 app.use(express.static(path.join(__dirname, 'www')));
-app.get('/', function(request, response) {
+app.get('*', function(request, response) {
   response.sendFile(__dirname + '/www/index.html');
 });
 

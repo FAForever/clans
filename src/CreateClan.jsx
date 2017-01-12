@@ -1,5 +1,5 @@
 import React from 'react';
-import { hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 
 import Utils from './utils/Utils.jsx';
 import Api from './utils/Api.jsx';
@@ -52,7 +52,7 @@ export default class CreateClan extends React.Component {
         let params = `tag=${encodeURIComponent(this.state.tag)}&name=${encodeURIComponent(this.state.name)}`;
         params += `&description=${encodeURIComponent(this.state.description)}`;
         Api.post(`clans/create?${params}`, function(response) {
-            hashHistory.push(`/clan/${response.data.id}`);
+            browserHistory.push(`/clan/${response.data.id}`);
         });
     }
 

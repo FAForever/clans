@@ -25,8 +25,8 @@ export default class ClanPage extends React.Component {
         }
         var dataSet = [];
         for (let membership of this.state.clan.memberships) {
-            let button =`<a href="#/action/kick/${membership.id}" class="btn btn-primary btn-xs">Kick Member</a>`;
-            button += `<a href="#/action/transferLeadership/${this.state.clan.id}/${membership.player.id}" class="btn btn-primary btn-xs">Make Founder</a>`;
+            let button =`<a href="/action/kick/${membership.id}" class="btn btn-primary btn-xs">Kick Member</a>`;
+            button += `<a href="/action/transferLeadership/${this.state.clan.id}/${membership.player.id}" class="btn btn-primary btn-xs">Make Founder</a>`;
             dataSet.push([membership.player.login, Utils.formatTimestamp(membership.createTime), button]);
         }
          // eslint-disable-next-line no-undef

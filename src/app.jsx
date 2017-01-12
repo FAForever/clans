@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {Router, Route, hashHistory} from 'react-router';
+import {Router, Route, browserHistory} from 'react-router';
 
 import Home from './Home.jsx';
 import ClanPage from './ClanPage.jsx';
@@ -19,10 +19,9 @@ import './utils/Session.jsx';
 
 
 ReactDOM.render(
-    <Router history={hashHistory }>
+    <Router history={browserHistory }>
       <Route>
         <Route path="/" component={Home} />
-        <Route path="/access_token=:token&token_type=*" component={Home} />
         <Route path="/clans" component={ClanList} />
         <Route path="/clan/:clanid" component={ClanPage} />
         <Route path="/action/create_clan" component={CreateClan} />

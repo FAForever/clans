@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, hashHistory } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 import Page from './Page.jsx';
 import Session from './utils/Session.jsx';
@@ -13,12 +13,12 @@ export default class Home extends React.Component {
             shuffle: true,
             duration: 5000 // Effect duration
         });
-        if(this.props.params.token) {
-            Session.oauth.token.getToken(window.location.href.replace('/#/', '/#')) // TODO: use browser history
+        if(location.hash.startsWith('#access_token')) {
+            Session.oauth.token.getToken(window.location.href) // TODO: use browser history
                 .then(function (token) {
                     Session.registerToken(token.data);
                 });
-            hashHistory.push('');
+            browserHistory.push('');
         }
     }
     render() {

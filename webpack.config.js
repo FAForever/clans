@@ -32,7 +32,10 @@ var config = {
     module: {
         loaders: [babelLoader, sassLoader, cssLoader]
     },
-    devServer: { inline: true }
+    devServer: { 
+        inline: true,
+        historyApiFallback: true
+    }
 };
 
 module.exports = config;
