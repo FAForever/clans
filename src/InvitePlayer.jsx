@@ -1,15 +1,17 @@
 import React from 'react';
 import Api from './utils/Api.jsx';
-import { hashHistory } from 'react-router';
 
 import Page from './Page.jsx';
-import InputPair from './InputPair.jsx';
 
-import Utils from './utils/Utils.jsx';
+import jwt from 'jwt-simple';
 
 export default class InvitePlayer extends React.Component {
     invite() {
-        Api.get('clans/generateInvitationLink?clanId=1013&playerId=3');
+        Api.get('clans/generateInvitationLink?clanId=1013&playerId=3', function(response) {
+            console.log(response.data.jwtToken);
+            var decoded = jwt.decode(response.data.jwtToken, null, true);
+            console.log(decoded);
+        });
     }
 
     render() {
