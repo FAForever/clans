@@ -23,7 +23,7 @@ export default class ClanList extends React.Component {
         }
         var dataSet = [];
         for (let clan of this.state.list) {
-            var button = '<a href="/clan/' + clan.id + '" class="btn btn-primary btn-xs">Open Clanpage</a>';
+            var button = `<button onclick="window.myHistory.push('clan/${clan.id}')" class="btn btn-primary btn-xs">Open Clanpage</button>`;
             dataSet.push([clan.name, clan.tag, clan.leader.login, clan.memberships.length, button]);
         }
         // eslint-disable-next-line no-undef

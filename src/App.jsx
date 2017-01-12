@@ -17,6 +17,8 @@ import '../node_modules/simple-grid2/simplegrid.css';
 
 import './utils/Session.jsx';
 
+// used for jquery Links
+window.myHistory = browserHistory;
 
 ReactDOM.render(
     <Router history={browserHistory }>
