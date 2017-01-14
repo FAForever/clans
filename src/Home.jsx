@@ -34,9 +34,9 @@ export default class Home extends React.Component {
                                 <Link to="/action/create_clan" className="btn btn-default btn-lg">
                                     <i className="fa fa-plus-circle"></i> Create Clan
                                 </Link>
-                                <a href="#" type="button" className="btn btn-default btn-lg">
+                                <Link to="/action/invitePlayer" className="btn btn-default btn-lg">
                                     <i className="fa fa-users"></i> Invite Players
-                                </a>
+                                </Link>
                                 <a href="http://www.faforever.com" className="btn btn-default btn-lg">
                                     <i className="fa fa-gamepad"></i> Play Together
                                 </a>

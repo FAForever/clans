@@ -35,14 +35,12 @@ export default class KickMember extends React.Component {
         return <div className="well bs-component">
             <InputPair disabled={true} label="Name" value={this.state.membership.player.login} />
             <InputPair disabled={true} label="Joined" value={Utils.formatTimestamp(this.state.membership.createTime)} />
-            <div className="row" style={{ 'marginTop': '15px' }}>
-                                <div onClick={this.kickMember.bind(this)} className="btn btn-default btn-lg">
-                                    Kick Member
-                                </div>
-                                 <div onClick={browserHistory.goBack}className="btn btn-default btn-lg">
-                                   Return to Clanpage
-                                </div>
-                            </div>
+            <div className="grid" style={{ 'marginTop': '15px' }}>
+                <button onClick={this.kickMember.bind(this)} className="col-1-2 btn btn-default btn-lg">
+                    Kick Member
+                </button>
+                <button onClick={browserHistory.goBack} className="col-1-2 btn btn-default btn-lg">Return to Clanpage</button>
+            </div>
         </div>;
     }
 

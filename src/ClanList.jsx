@@ -66,8 +66,6 @@ export default class ClanList extends React.Component {
     }
 
     render() {
-        return (
-      <Page title="Clans">{this.render2()}</Page>
-        );
+        return <Page title="Clans">{this.render2()}</Page>;
     }
 }

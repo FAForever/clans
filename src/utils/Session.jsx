@@ -70,6 +70,12 @@ export default {
         }
         return null;
     },
+    getClan() {
+        if(this.getUser()) {
+            return this.getUser().clan;
+        }
+        return null;
+    },
     getPlayername() {
         if(user != null && user.player != null) {
             return user.player.login;

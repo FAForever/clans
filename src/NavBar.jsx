@@ -29,8 +29,8 @@ export default class NavBar extends React.Component {
 
 
     renderUserData() {
-        if(Session.getUser() && Session.getUser().clan) {
-            let clan = Session.getUser().clan;
+        if(Session.getClan()) {
+            let clan = Session.getClan();
             return <li><Link to={`/clan/${clan.id}`} activeClassName="active">My Clan: {clan.tag}</Link></li>;
         }
     }
