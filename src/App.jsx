@@ -11,6 +11,7 @@ import CreateClan from './CreateClan.jsx';
 import KickMember from './KickMember.jsx';
 import TransferLeadership from './TransferLeadership.jsx';
 import InvitePlayer from './InvitePlayer.jsx';
+import AcceptInvitation from './AcceptInvitation.jsx';
 import './table.scss';
 import './main.scss';
 import '../node_modules/simple-grid2/simplegrid.css';
@@ -30,6 +31,7 @@ ReactDOM.render(
         <Route path="/action/kick/:membershipid" component={KickMember} />
         <Route path="/action/transferLeadership/:clanid/:newleaderid" component={TransferLeadership} />
         <Route path="/action/invitePlayer" component={InvitePlayer} />
+        <Route path="/action/accept" component={AcceptInvitation} />
       </Route>
     </Router>,
     document.getElementById('app')

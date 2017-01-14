@@ -2,6 +2,7 @@ import JsonApi from 'devour-client';
 import axios from 'axios';
 
 import Session from './Session.jsx';
+import Toast from './Toast.jsx';
 
 let jsonApi = new JsonApi({
     apiUrl: 'http://localhost:5000/data',
@@ -57,8 +58,8 @@ export default {
         { headers: { Authorization: `Bearer ${Session.getToken()}` } })
         .then(sucessCallback)
         .catch(function (error) {
-            console.log(error);
-        });
+            this.error(error);
+        }.bind(this));
     },
     post(url, sucessCallback) {
         axios.post(`http://localhost:5000/${url}`, 
@@ -66,8 +67,11 @@ export default {
         { headers: { Authorization: `Bearer ${Session.getToken()}` } })
         .then(sucessCallback)
         .catch(function (error) {
-            console.log(error);
-        });
+            this.error(error);
+        }.bind(this));
+    },
+    error(error) {
+        Toast.getContainer().error(error.response.data.message, error.response.data.error);
     },
     json() {
         return jsonApi;

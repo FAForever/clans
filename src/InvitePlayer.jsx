@@ -2,9 +2,6 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import Autocomplete from 'react-autocomplete';
 
-import jwt from 'jwt-simple';
-
-
 import Page from './Page.jsx';
 
 import Api from './utils/Api.jsx';
@@ -43,10 +40,6 @@ export default class InvitePlayer extends React.Component {
         this.invite = this.invite.bind(this);
         this.onChange = this.onChange.bind(this);
         this.onSelect = this.onSelect.bind(this);
-    }
-
-    componentDidUpdate() {
-        new Clipboard('.btn');
     }
 
     invite() {   
@@ -100,7 +93,7 @@ export default class InvitePlayer extends React.Component {
 
     renderLink() {
         if(this.state.token) {
-            let link = `http://localhost:8080/action/accept/?token=${this.state.token}`;
+            let link = `http://localhost:8080/action/accept#token=${this.state.token}`;
             return <div style={{marginTop: '15px'}}>
                         <p>Copy link, send it to the player, then he can join your clan.</p>
                         <div className="grid ">
