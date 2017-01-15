@@ -32,7 +32,7 @@ ReactDOM.render(
         <Route path="/action/deleteClan/:clanid" component={DeleteClan} />
         <Route path="/action/kick/:membershipid" component={KickMember} />
         <Route path="/action/transferLeadership/:clanid/:newleaderid" component={TransferLeadership} />
-        <Route path="/action/invitePlayer" component={InvitePlayer} />
+        <Route path="/action/invitePlayer/:clanid" component={InvitePlayer} />
         <Route path="/action/accept" component={AcceptInvitation} />
       </Route>
     </Router>,

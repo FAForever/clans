@@ -108,10 +108,12 @@ export default class ClanPage extends React.Component {
                 {this.isLeader() &&
                     <div className="grid" style={{ marginTop: '15px' }}>
                         <button disabled={!this.dirty()}
-                            className="col-1-2 btn btn-default btn-lg"
+                            className="col-1-3 btn btn-default btn-lg"
                             onClick={this.updateClan}>Update Clan Data</button>
+                        <Link to={`/action/invitePlayer/${this.state.clan.id}`}
+                            className="col-1-3 btn btn-default btn-lg">Invite Player</Link>
                         <Link to={`/action/deleteClan/${this.state.clan.id}`}
-                            className="col-1-2 btn btn-default btn-lg">Delete Clan</Link>
+                            className="col-1-3 btn btn-default btn-lg">Delete Clan</Link>
                     </div>
                 }
             </div>

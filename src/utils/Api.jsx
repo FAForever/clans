@@ -54,7 +54,8 @@ jsonApi.define('player', {
 
 export default {
     get(url, sucessCallback) {
-        axios.get(`http://localhost:5000/${url}`)
+        axios.get(`http://localhost:5000/${url}`,
+            { headers: { Authorization: `Bearer ${Session.getToken()}` } })
             .then(sucessCallback)
             .catch(function (error) {
                 this.error(error);
@@ -62,7 +63,7 @@ export default {
     },
     post(url, sucessCallback) {
         axios.post(`http://localhost:5000/${url}`,
-            null)
+            { headers: { Authorization: `Bearer ${Session.getToken()}` } })
             .then(sucessCallback)
             .catch(function (error) {
                 this.error(error);

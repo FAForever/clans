@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 import Autocomplete from 'react-autocomplete';
 
 import Page from './Page.jsx';
+import InputPair from './InputPair.jsx';
 
 import Api from './utils/Api.jsx';
 import Toast from './utils/Toast.jsx';
@@ -42,38 +43,57 @@ export default class InvitePlayer extends React.Component {
         this.onSelect = this.onSelect.bind(this);
     }
 
-    invite() {   
-        if(Session.getClan() == null) {
-            Toast.getContainer().error('You are not in a clan', 'No Clan found');
+    componentDidMount() {
+        Api.json().one('clan', this.props.params.clanid).get({ include: 'leader' })
+            .then(this.setData.bind(this)).catch(error => console.error(error));
+    }
+
+    setData(data) {
+        if (!Session.loggedIn()) {
+            Toast.getContainer().error('You are not logged in');
+            return;
         }
-        if(this.state.player == null) {
+        if (data == null) {
+            Toast.getContainer().error('No clan found');
+            return;
+        }
+        if (data.leader.id != Session.getPlayer().id) {
+            Toast.getContainer().error('Only the leader can invite players', 'You have no permission');
+            return;
+        }
+        this.setState({ clan: data });
+    }
+
+    invite() {
+        if (this.state.player == null) {
             Toast.getContainer().error('You must select a player for invitation', 'No PLayer selected');
         }
         console.log(this.state.player);
-        Api.get(`clans/generateInvitationLink?clanId=${Session.getClan().id}&playerId=${this.state.player.id}`, (response) => {
-            this.setState({token: response.data.jwtToken});
+        Api.get(`clans/generateInvitationLink?clanId=${this.state.clan.id}&playerId=${this.state.player.id}`, (response) => {
+            this.setState({ token: response.data.jwtToken });
         });
-        this.setState({disabled: true});
+        this.setState({ disabled: true });
         Toast.getContainer().info('Invitation link will be generated', 'Generate Invitation Link');
     }
 
     onChange(event, value) {
         let pagesize = 50;
         // to decrease server load and get result faster
-        if(value.length <= 3) {
+        if (value.length <= 3) {
             pagesize = 10;
-        } else if(value.length <= 5) {
+        } else if (value.length <= 5) {
             pagesize = 20;
         }
         // TODO: tune this
         this.setState({ value, loading: true, disabled: true });
-        Api.json().findAll('player', { 
-            filter: `lowerCaseLogin==${value}*`, 
-            page: {size: pagesize},
-            sort: 'lowerCaseLogin'})
-            .then(function(data) {
+        Api.json().findAll('player', {
+            filter: `lowerCaseLogin==${value}*`,
+            page: { size: pagesize },
+            sort: 'lowerCaseLogin'
+        })
+            .then(function (data) {
                 console.log(data);
-                this.setState({ loading : false, players: data});
+                this.setState({ loading: false, players: data });
             }.bind(this)).catch(error => console.error(error));
     }
 
@@ -86,49 +106,62 @@ export default class InvitePlayer extends React.Component {
     }
 
     renderItem(item, isHighlighted) {
-        return <div style={isHighlighted ? styles.highlightedItem : styles.item} 
-                    className="item" key={item.id}
-                    id={item.id}>{item.login}</div>;
+        return <div style={isHighlighted ? styles.highlightedItem : styles.item}
+            className="item" key={item.id}
+            id={item.id}>{item.login}</div>;
     }
 
     renderLink() {
-        if(this.state.token) {
+        if (this.state.token) {
             let link = `http://localhost:8080/action/accept#token=${this.state.token}`;
-            return <div style={{marginTop: '15px'}}>
-                        <p>Copy link, send it to the player, then he can join your clan.</p>
-                        <div className="grid ">
-                            <span className="col-1-6" >Link</span>
-                            <input id="InviteLink" disabled type="text" className="col-5-6" defaultValue={link} />
-                        </div>
-                    </div>;
+            return <div style={{ marginTop: '15px' }}>
+                <p>3. Copy link to clipboard</p>
+                <div className="grid ">
+                    <span className="col-1-6" >Link</span>
+                    <input id="InviteLink" disabled type="text" className="col-5-6" defaultValue={link} />
+                </div>
+                <p />
+                <p>4. Send the link to the player, e.g. as personal message in faf, over Mumble, ...</p>
+            </div>;
         }
     }
 
     render() {
-        return <Page title="Invite Player">
+        if (this.state.clan) {
+            return <Page title="Invite Player">
                 <div className="well bs-component">
                     <div className="grid ">
+                        <p>Here you can invite players to your clan</p>
+                        <InputPair disabled={true} label="Clan Tag" value={this.state.clan.tag} />
+                        <InputPair disabled={true} label="Clan Name" value={this.state.clan.name} />
+                        <p>1. Search the Player</p>
                         <span className="col-1-6">Player Name</span>
-                        <div className="col-5-6">  
+                        <div className="col-5-6">
                             <Autocomplete
-                            ref="autocomplete"
-                            value={this.state.value}
-                            renderMenu={this.renderMenu}
-                            items={this.state.players}
-                            getItemValue={(item) => item.login}
-                            onSelect={this.onSelect}
-                            onChange={this.onChange}
-                            renderItem={this.renderItem}/>
+                                ref="autocomplete"
+                                value={this.state.value}
+                                renderMenu={this.renderMenu}
+                                items={this.state.players}
+                                getItemValue={(item) => item.login}
+                                onSelect={this.onSelect}
+                                onChange={this.onChange}
+                                renderItem={this.renderItem} />
                         </div>
                     </div>
+                    <p />
+                    <p>2. Generate Link</p>
                     <div className="grid" style={{ 'marginTop': '15px' }}>
-                        <button disabled={this.state.disabled} 
-                        onClick={this.invite} className="col-1-2 btn btn-default btn-lg">
+                        <button disabled={this.state.disabled}
+                            onClick={this.invite} className="col-1-1 btn btn-default btn-lg">
                             Generate Invitation Link
                         </button>
-                        <button onClick={browserHistory.goBack} className="col-1-2 btn btn-default btn-lg" >Go Back</button>
                     </div>{this.renderLink()}
+                    <div className="grid" style={{ 'marginTop': '15px' }}>
+                        <button onClick={browserHistory.goBack} className="col-1-1 btn btn-default btn-lg" >Go Back</button>
+                    </div>
                 </div>
-                </Page>;
+            </Page>;
+        }
+        return <Page title="Loading..." />;
     }
 }
