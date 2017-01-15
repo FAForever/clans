@@ -54,21 +54,27 @@ jsonApi.define('player', {
 
 export default {
     get(url, sucessCallback) {
-        axios.get(`http://localhost:5000/${url}`, 
-        { headers: { Authorization: `Bearer ${Session.getToken()}` } })
-        .then(sucessCallback)
-        .catch(function (error) {
-            this.error(error);
-        }.bind(this));
+        axios.get(`http://localhost:5000/${url}`)
+            .then(sucessCallback)
+            .catch(function (error) {
+                this.error(error);
+            }.bind(this));
     },
     post(url, sucessCallback) {
-        axios.post(`http://localhost:5000/${url}`, 
-        null, 
-        { headers: { Authorization: `Bearer ${Session.getToken()}` } })
-        .then(sucessCallback)
-        .catch(function (error) {
-            this.error(error);
-        }.bind(this));
+        axios.post(`http://localhost:5000/${url}`,
+            null)
+            .then(sucessCallback)
+            .catch(function (error) {
+                this.error(error);
+            }.bind(this));
+    },
+    delete(url, sucessCallback) {
+        axios.delete(`http://localhost:5000/${url}`,
+            { headers: { Authorization: `Bearer ${Session.getToken()}` } })
+            .then(sucessCallback)
+            .catch(function (error) {
+                this.error(error);
+            }.bind(this));
     },
     error(error) {
         Toast.getContainer().error(error.response.data.message, error.response.data.error);

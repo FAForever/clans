@@ -8,6 +8,7 @@ import Home from './Home.jsx';
 import ClanPage from './ClanPage.jsx';
 import ClanList from './ClanList.jsx';
 import CreateClan from './CreateClan.jsx';
+import DeleteClan from './DeleteClan.jsx';
 import KickMember from './KickMember.jsx';
 import TransferLeadership from './TransferLeadership.jsx';
 import InvitePlayer from './InvitePlayer.jsx';
@@ -28,6 +29,7 @@ ReactDOM.render(
         <Route path="/clans" component={ClanList} />
         <Route path="/clan/:clanid" component={ClanPage} />
         <Route path="/action/create_clan" component={CreateClan} />
+        <Route path="/action/deleteClan/:clanid" component={DeleteClan} />
         <Route path="/action/kick/:membershipid" component={KickMember} />
         <Route path="/action/transferLeadership/:clanid/:newleaderid" component={TransferLeadership} />
         <Route path="/action/invitePlayer" component={InvitePlayer} />

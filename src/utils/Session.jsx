@@ -44,8 +44,8 @@ function grabUserData(token) {
                 localStorage.setItem('user', JSON.stringify(user));
                 dataChanged();
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch(() => {
+                logoutIntern();
             });
 }
 
@@ -55,6 +55,15 @@ function dataChanged() {
     for(let listener in listeners) {
         listeners[listener]();
     }
+}
+
+function logoutIntern() {
+    token = null;
+    user = null;
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    Api.json().headers['Authorization'] = null;
+    dataChanged();
 }
 
 export default {
@@ -86,19 +95,13 @@ export default {
         return token != null;
     },
     login() {
-            
-            
-            // Open the page in a new window, then redirect back to a page that calls our global `oauth2Callback` function. 
+        // Open the page in a new window, then redirect back to a page that calls our global `oauth2Callback` function. 
         window.open(oauth.token.getUri(), '_self');
         dataChanged();
     },
     logout() {
-        token = null;
-        user = null;
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        Api.json().headers['Authorization'] = null;
-        dataChanged();
+        logoutIntern();
+        
     },
     registerToken(token) {
         registerTokenIntern(token);

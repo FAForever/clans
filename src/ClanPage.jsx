@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router';
+
 import Api from './utils/Api.jsx';
 import Utils from './utils/Utils.jsx';
 import Session from './utils/Session.jsx';
@@ -20,6 +22,7 @@ export default class ClanPage extends React.Component {
         };
         this.updated = false; // prevent DatTable to reinit if you visit the page again
         this.updateClan = this.updateClan.bind(this);
+        this.deleteClan = this.deleteClan.bind(this);
     }
 
     componentDidMount() {
@@ -76,6 +79,10 @@ export default class ClanPage extends React.Component {
         });
     }
 
+    deleteClan() {
+
+    }
+
     renderClan() {
         return <div>
             {this.dirty() &&
@@ -101,8 +108,10 @@ export default class ClanPage extends React.Component {
                 {this.isLeader() &&
                     <div className="grid" style={{ marginTop: '15px' }}>
                         <button disabled={!this.dirty()}
-                            className="col-1-1 btn btn-default btn-lg"
+                            className="col-1-2 btn btn-default btn-lg"
                             onClick={this.updateClan}>Update Clan Data</button>
+                        <Link to={`/action/deleteClan/${this.state.clan.id}`}
+                            className="col-1-2 btn btn-default btn-lg">Delete Clan</Link>
                     </div>
                 }
             </div>
