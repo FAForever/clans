@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import Api from './utils/Api.jsx';
-import Utils from './utils/Utils.jsx';
-import Session from './utils/Session.jsx';
-import Toast from './utils/Toast.jsx';
+import Api from '../utils/Api.jsx';
+import Utils from '../utils/Utils.jsx';
+import Session from '../utils/Session.jsx';
+import Toast from '../utils/Toast.jsx';
 
-import Clan from './components/Clan.jsx';
-import Warning from './components/Warning.jsx';
-import Page from './Page.jsx';
+import Clan from '../components/Clan.jsx';
+import Warning from '../components/Warning.jsx';
+import Page from '../components/Page.jsx';
 
 export default class ClanPage extends React.Component {
     constructor(props) {
@@ -55,7 +55,7 @@ export default class ClanPage extends React.Component {
     }
 
     isLeader() {
-        return this.state.clan.leader.id == Session.getPlayer().id;
+        return Session.getPlayer() && this.state.clan.leader.id == Session.getPlayer().id;
     }
 
     dirty() {

@@ -1,13 +1,13 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
-import Utils from './utils/Utils.jsx';
-import Session from './utils/Session.jsx';
-import Api from './utils/Api.jsx';
+import Utils from '../utils/Utils.jsx';
+import Session from '../utils/Session.jsx';
+import Api from '../utils/Api.jsx';
 
-import Page from './Page.jsx';
-import Clan from './components/Clan.jsx';
-import Warning from './components/Warning.jsx';
+import Page from '../components/Page.jsx';
+import Clan from '../components/Clan.jsx';
+import Warning from '../components/Warning.jsx';
 
 export default class CreateClan extends React.Component {
     constructor(props) {

@@ -52,35 +52,44 @@ jsonApi.define('player', {
     // }
 });
 
+function getHeader() {
+    if (Session.getToken()) {
+        return { headers: { Authorization: `Bearer ${Session.getToken()}` } };
+    }
+    return {};
+}
+
 export default {
     get(url, sucessCallback) {
+        this.getError(url, sucessCallback, this.error);
+    },
+    getError(url, sucessCallback, errorCallback) {
         axios.get(`http://localhost:5000/${url}`,
-            { headers: { Authorization: `Bearer ${Session.getToken()}` } })
+            getHeader())
             .then(sucessCallback)
-            .catch(function (error) {
-                this.error(error);
-            }.bind(this));
+            .catch(errorCallback);
     },
     post(url, sucessCallback) {
         axios.post(`http://localhost:5000/${url}`,
-            { headers: { Authorization: `Bearer ${Session.getToken()}` } })
+            getHeader())
             .then(sucessCallback)
-            .catch(function (error) {
+            .catch((error) => {
                 this.error(error);
-            }.bind(this));
+            });
     },
     delete(url, sucessCallback) {
         axios.delete(`http://localhost:5000/${url}`,
-            { headers: { Authorization: `Bearer ${Session.getToken()}` } })
+            getHeader())
             .then(sucessCallback)
-            .catch(function (error) {
+            .catch((error) => {
                 this.error(error);
-            }.bind(this));
+            });
     },
     error(error) {
         Toast.getContainer().error(error.response.data.message, error.response.data.error);
     },
     json() {
+        jsonApi.headers['Authorization'] = Session.getToken() ? `Bearer ${Session.getToken()}` : null;
         return jsonApi;
     }
 };

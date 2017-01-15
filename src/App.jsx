@@ -4,16 +4,15 @@ import ReactDOM from 'react-dom';
 
 import {Router, Route, browserHistory} from 'react-router';
 
-import Home from './Home.jsx';
-import ClanPage from './ClanPage.jsx';
-import ClanList from './ClanList.jsx';
-import CreateClan from './CreateClan.jsx';
-import DeleteClan from './DeleteClan.jsx';
-import KickMember from './KickMember.jsx';
-import TransferLeadership from './TransferLeadership.jsx';
-import InvitePlayer from './InvitePlayer.jsx';
-import AcceptInvitation from './AcceptInvitation.jsx';
-import './table.scss';
+import Home from './pages/Home.jsx';
+import ClanPage from './pages/ClanPage.jsx';
+import ClanList from './pages/ClanList.jsx';
+import CreateClan from './actions/CreateClan.jsx';
+import DeleteClan from './actions/DeleteClan.jsx';
+import KickMember from './actions/KickMember.jsx';
+import TransferLeadership from './actions/TransferLeadership.jsx';
+import InvitePlayer from './actions/InvitePlayer.jsx';
+import AcceptInvitation from './actions/AcceptInvitation.jsx';
 import './main.scss';
 import '../node_modules/simple-grid2/simplegrid.css';
 
@@ -28,7 +27,7 @@ ReactDOM.render(
         <Route path="/" component={Home} />
         <Route path="/clans" component={ClanList} />
         <Route path="/clan/:clanid" component={ClanPage} />
-        <Route path="/action/create_clan" component={CreateClan} />
+        <Route path="/action/createClan" component={CreateClan} />
         <Route path="/action/deleteClan/:clanid" component={DeleteClan} />
         <Route path="/action/kick/:membershipid" component={KickMember} />
         <Route path="/action/transferLeadership/:clanid/:newleaderid" component={TransferLeadership} />

@@ -8,8 +8,14 @@ export default class Page extends React.Component {
         return (
             <div>
                 <NavBar />
+                {this.props.warning &&
+                    <Warning message={this.props.warning} />
+                }
+
                 <div className="container">
-                    <h1 id="title">{this.props.title}</h1>
+                    {this.props.title &&
+                        <h1 id="title">{this.props.title}</h1>
+                    }
                     {this.props.children}
                 </div>
                 <Footer />

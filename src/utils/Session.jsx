@@ -1,58 +1,52 @@
-import axios from 'axios';
-import Api from './Api.jsx';
-
 import ClientOAuth2 from 'client-oauth2';
+import axios from 'axios';
 
 const clientId = '83891c0c-feab-42e1-9ca7-515f94f808ef';
 const url = 'http://localhost:5000';
 const redirect_uri = 'http://localhost:8080/';
 
-const oauth = new ClientOAuth2( {
+const oauth = new ClientOAuth2({
     clientId: clientId,
     authorizationUri: `${url}/oauth/authorize`,
     redirectUri: redirect_uri
 });
 let token;
 let user;
+let listeners = [];
+
 try {
-    user =  JSON.parse(localStorage.getItem('user'));
-} catch(err) {
+    user = JSON.parse(localStorage.getItem('user'));
+} catch (err) {
     console.log(err);
 }
 try {
     token = JSON.parse(localStorage.getItem('token'));
-} catch(err) {
+} catch (err) {
     console.log(err);
 }
 
-if(token) {
-    registerTokenIntern(token);
+if (validToken()) {
+    grabUserData();
 }
 
-function registerTokenIntern(newToken) {
-    token = newToken;
-    localStorage.setItem('token', JSON.stringify(token));
-    Api.json().headers['Authorization'] = `Bearer ${token.access_token}`;
-    grabUserData(token);
+function validToken() {
+    // TODO: pre test if expired
+    return token;
 }
 
-function grabUserData(token) {
-    axios.get('http://localhost:5000/clans/me', 
-            {headers: { Authorization: `Bearer ${token.access_token}`}})
-            .then(function (response) {
-                user = response.data;
-                localStorage.setItem('user', JSON.stringify(user));
-                dataChanged();
-            })
-            .catch(() => {
-                logoutIntern();
-            });
+function grabUserData() {
+    // we must make own call, because API cannot access us on initilization
+    axios.get('http://localhost:5000/clans/me',
+        { headers: { Authorization: `Bearer ${token.access_token}` } })
+        .then((response) => {
+            user = response.data;
+            localStorage.setItem('user', JSON.stringify(user));
+            dataChanged();
+        }).catch(logoutIntern);
 }
-
-let listeners = [];
 
 function dataChanged() {
-    for(let listener in listeners) {
+    for (let listener in listeners) {
         listeners[listener]();
     }
 }
@@ -62,32 +56,28 @@ function logoutIntern() {
     user = null;
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    Api.json().headers['Authorization'] = null;
     dataChanged();
 }
 
 export default {
     getToken() {
-        return token.access_token;
-    },
-    getUser() {
-        return user;
+        return token ? token.access_token : null;
     },
     getPlayer() {
-        if(user != null && user.player != null) {
+        if (user && user.player) {
             return user.player;
         }
         return null;
     },
     getClan() {
-        if(this.getUser()) {
-            return this.getUser().clan;
+        if (user && user.clan) {
+            return user.clan;
         }
         return null;
     },
     getPlayername() {
-        if(user != null && user.player != null) {
-            return user.player.login;
+        if (this.getPlayer()) {
+            return this.getPlayer().login;
         }
         return null;
     },
@@ -101,10 +91,11 @@ export default {
     },
     logout() {
         logoutIntern();
-        
     },
-    registerToken(token) {
-        registerTokenIntern(token);
+    registerToken(newToken) {
+        token = newToken;
+        localStorage.setItem('token', JSON.stringify(newToken));
+        grabUserData();
     },
     addListener(callback) {
         listeners.push(callback);

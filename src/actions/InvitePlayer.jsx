@@ -2,12 +2,12 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import Autocomplete from 'react-autocomplete';
 
-import Page from './Page.jsx';
-import InputPair from './InputPair.jsx';
+import Page from '../components/Page.jsx';
+import InputPair from '../components/InputPair.jsx';
 
-import Api from './utils/Api.jsx';
-import Toast from './utils/Toast.jsx';
-import Session from './utils/Session.jsx';
+import Api from '../utils/Api.jsx';
+import Toast from '../utils/Toast.jsx';
+import Session from '../utils/Session.jsx';
 
 export let styles = {
     item: {

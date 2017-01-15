@@ -1,6 +1,6 @@
 import React from 'react';
 
-import InputPair from '../InputPair.jsx';
+import InputPair from './InputPair.jsx';
 
 export default class Clan extends React.Component {
     constructor(props) {

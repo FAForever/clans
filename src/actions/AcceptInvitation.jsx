@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import Page from './Page.jsx';
-import InputPair from './InputPair.jsx';
-import Api from './utils/Api.jsx';
-import Utils from './utils/Utils.jsx';
+import Page from '../components/Page.jsx';
+import InputPair from '../components/InputPair.jsx';
+import Api from '../utils/Api.jsx';
+import Utils from '../utils/Utils.jsx';
 
 import jwt from 'jwt-simple';
 

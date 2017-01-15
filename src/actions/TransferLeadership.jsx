@@ -1,12 +1,13 @@
 import React from 'react';
-import Api from './utils/Api.jsx';
 import { browserHistory } from 'react-router';
 
-import Warning from './components/Warning.jsx';
-import Page from './Page.jsx';
-import InputPair from './InputPair.jsx';
-import Toast from './utils/Toast.jsx';
-import Session from './utils/Session.jsx';
+import Warning from '../components/Warning.jsx';
+import Page from '../components/Page.jsx';
+import InputPair from '../components/InputPair.jsx';
+
+import Api from '../utils/Api.jsx';
+import Toast from '../utils/Toast.jsx';
+import Session from '../utils/Session.jsx';
 
 import _ from 'lodash';
 

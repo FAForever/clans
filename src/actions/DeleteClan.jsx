@@ -1,13 +1,13 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
-import Warning from './components/Warning.jsx';
-import Api from './utils/Api.jsx';
-import Session from './utils/Session.jsx';
-import Toast from './utils/Toast.jsx';
+import Warning from '../components/Warning.jsx';
+import Api from '../utils/Api.jsx';
+import Session from '../utils/Session.jsx';
+import Toast from '../utils/Toast.jsx';
 
-import Page from './Page.jsx';
-import InputPair from './InputPair.jsx';
+import Page from '../components/Page.jsx';
+import InputPair from '../components/InputPair.jsx';
 
 export default class DeleteClan extends React.Component {
     constructor(props) {

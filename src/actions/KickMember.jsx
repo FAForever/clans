@@ -1,11 +1,11 @@
 import React from 'react';
-import Api from './utils/Api.jsx';
 import { browserHistory } from 'react-router';
 
-import Page from './Page.jsx';
-import InputPair from './InputPair.jsx';
+import Page from '../components/Page.jsx';
+import InputPair from '../components/InputPair.jsx';
 
-import Utils from './utils/Utils.jsx';
+import Api from '../utils/Api.jsx';
+import Utils from '../utils/Utils.jsx';
 
 export default class KickMember extends React.Component {
     constructor(props) {

@@ -1,7 +1,8 @@
 import React from 'react';
-import Api from './utils/Api.jsx';
 
-import Page from './Page.jsx';
+import Api from '../utils/Api.jsx';
+
+import Page from '../components/Page.jsx';
 
 export default class ClanList extends React.Component {
     constructor(props) {

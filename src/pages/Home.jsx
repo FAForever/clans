@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 
-import Page from './Page.jsx';
-import Session from './utils/Session.jsx';
+import Page from '../components/Page.jsx';
+import Session from '../utils/Session.jsx';
 
 export default class Home extends React.Component {
     componentDidMount() {
@@ -17,12 +17,12 @@ export default class Home extends React.Component {
             Session.oauth.token.getToken(window.location.href) // TODO: use browser history
                 .then(function (token) {
                     Session.registerToken(token.data);
+                    browserHistory.push('');
                 });
-            browserHistory.push('');
         }
-        Session.addListener(function() {
+        Session.addListener(() => {
             this.forceUpdate();
-        }.bind(this));
+        });
     }
     render() {
         return (
@@ -35,7 +35,7 @@ export default class Home extends React.Component {
                         </div>
                         <div className="row" style={{ 'marginTop': '15px' }}>
                             {!Session.getClan() &&
-                            <Link to="/action/create_clan" className="btn btn-default btn-lg">
+                            <Link to="/action/createClan" className="btn btn-default btn-lg">
                                 <i className="fa fa-plus-circle"></i> Create Clan
                                 </Link>
                             }
