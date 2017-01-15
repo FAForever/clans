@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 
 import Page from '../components/Page.jsx';
 import InputPair from '../components/InputPair.jsx';
+import BigButton from '../components/BigButton.jsx';
+
 import Api from '../utils/Api.jsx';
 import Utils from '../utils/Utils.jsx';
 
@@ -20,9 +22,9 @@ export default class AcceptInvitation extends React.Component {
     componentDidMount() {
         let token = location.hash.substring('#token='.length);
         var decoded = jwt.decode(token, null, true);
-        this.setState({token, data: decoded});
+        this.setState({ token, data: decoded });
     }
-    
+
     joinClan() {
         Api.post(`clans/joinClan?token=${this.state.token}`, (response) => {
             console.log(response);
@@ -32,16 +34,16 @@ export default class AcceptInvitation extends React.Component {
     render() {
         if (this.state.data) {
             return <Page title={'Join Clan'}>
-                    <div className="well bs-component">
-                        <InputPair disabled={true} label="Clan Tag" value={this.state.data.clan.tag} />
-                        <InputPair disabled={true} label="Clan Name" value={this.state.data.clan.name} />
-                        <InputPair disabled={true} label="Expire At" value={Utils.formatTimestamp(this.state.data.expire)} />
-                        <div className="grid" style={{marginTop: '15px'}}>
-                            <button onClick={this.joinClan} className="col-1-2 btn btn-default btn-lg">Join Clan</button>
-                            <Link to={`/clan/${this.state.data.clan.id}`} className="col-1-2 btn btn-default btn-lg">Go to Clan Page</Link>
-                        </div>
+                <div className="well bs-component">
+                    <InputPair disabled={true} label="Clan Tag" value={this.state.data.clan.tag} />
+                    <InputPair disabled={true} label="Clan Name" value={this.state.data.clan.name} />
+                    <InputPair disabled={true} label="Expire At" value={Utils.formatTimestamp(this.state.data.expire)} />
+                    <div className="grid" style={{ marginTop: '15px' }}>
+                        <BigButton onClick={this.joinClan} className="col-1-2">Join Clan</BigButton>
+                        <Link to={`/clan/${this.state.data.clan.id}`} className="col-1-2 btn btn-default btn-lg">Go to Clan Page</Link>
                     </div>
-                </Page>;
+                </div>
+            </Page>;
         }
         return <Page title="Loading..." />;
     }

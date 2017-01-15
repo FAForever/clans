@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 
 import Warning from '../components/Warning.jsx';
 import Page from '../components/Page.jsx';
+import BigButton from '../components/BigButton.jsx';
 import InputPair from '../components/InputPair.jsx';
 
 import Api from '../utils/Api.jsx';
@@ -82,8 +83,12 @@ export default class TransferLeadership extends React.Component {
                 <InputPair label="New Leader" value={this.state.confirmName} onChange={this.onNewLeaderChange.bind(this)} />
                 <p />
                 <div className="grid">
-                    <button disabled={this.submitDisabled()} onClick={this.transferLeadership.bind(this)} className="col-1-2 btn btn-default btn-lg">Transfer Leadership</button>
-                    <button onClick={browserHistory.goBack} className="col-1-2 btn btn-default btn-lg">Stay Leader</button>
+                    <BigButton disabled={this.submitDisabled()}
+                        onClick={this.transferLeadership.bind(this)}
+                        className="col-1-2">Transfer Leadership</BigButton>
+                    <BigButton
+                        onClick={browserHistory.goBack}
+                        className="col-1-2">Stay Leader</BigButton>
                 </div>
             </div>
         </div>;

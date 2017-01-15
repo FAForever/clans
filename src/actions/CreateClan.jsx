@@ -8,6 +8,7 @@ import Api from '../utils/Api.jsx';
 import Page from '../components/Page.jsx';
 import Clan from '../components/Clan.jsx';
 import Warning from '../components/Warning.jsx';
+import BigButton from '../components/BigButton.jsx';
 
 export default class CreateClan extends React.Component {
     constructor(props) {
@@ -29,8 +30,8 @@ export default class CreateClan extends React.Component {
     }
 
     render() {
-        if(Session.getClan()) {
-            return <Page><Warning message="You are allready in a clan"/></Page>;
+        if (Session.getClan()) {
+            return <Page><Warning message="You are allready in a clan" /></Page>;
         }
         if (Session.loggedIn()) {
             return <Page title="Create New Clan">
@@ -48,10 +49,12 @@ export default class CreateClan extends React.Component {
                         this.setState({ description: value });
                     } } />
                     <div className="grid" style={{ marginTop: '15px' }}>
-                        <button disabled={this.state.tag == '' || this.state.name == ''} onClick={this.submitData.bind(this)} className="col-1-1 btn btn-default btn-lg">Create New Clan</button>
+                        <BigButton disabled={this.state.tag == '' || this.state.name == ''}
+                            onClick={this.submitData.bind(this)}
+                            className="col-1-1">Create New Clan</BigButton>
                     </div>
                 </div></Page>;
         }
-        return <Page><Warning message="Please log in"/></Page>;
+        return <Page><Warning message="Please log in" /></Page>;
     }
 }

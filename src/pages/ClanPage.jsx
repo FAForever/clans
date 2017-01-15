@@ -8,6 +8,7 @@ import Toast from '../utils/Toast.jsx';
 
 import Clan from '../components/Clan.jsx';
 import Warning from '../components/Warning.jsx';
+import BigButton from '../components/BigButton.jsx';
 import Page from '../components/Page.jsx';
 
 export default class ClanPage extends React.Component {
@@ -107,9 +108,9 @@ export default class ClanPage extends React.Component {
                     } } />
                 {this.isLeader() &&
                     <div className="grid" style={{ marginTop: '15px' }}>
-                        <button disabled={!this.dirty()}
-                            className="col-1-3 btn btn-default btn-lg"
-                            onClick={this.updateClan}>Update Clan Data</button>
+                        <BigButton disabled={!this.dirty()}
+                            className="col-1-3"
+                            onClick={this.updateClan}>Update Clan Data</BigButton>
                         <Link to={`/action/invitePlayer/${this.state.clan.id}`}
                             className="col-1-3 btn btn-default btn-lg">Invite Player</Link>
                         <Link to={`/action/deleteClan/${this.state.clan.id}`}

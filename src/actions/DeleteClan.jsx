@@ -1,11 +1,12 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
-import Warning from '../components/Warning.jsx';
 import Api from '../utils/Api.jsx';
 import Session from '../utils/Session.jsx';
 import Toast from '../utils/Toast.jsx';
 
+import Warning from '../components/Warning.jsx';
+import BigButton from '../components/BigButton.jsx';
 import Page from '../components/Page.jsx';
 import InputPair from '../components/InputPair.jsx';
 
@@ -56,10 +57,10 @@ export default class DeleteClan extends React.Component {
                     } } />
                     <p />
                     <div className="grid">
-                        <button disabled={this.state.confirmName != this.state.clan.name}
+                        <BigButton disabled={this.state.confirmName != this.state.clan.name}
                             onClick={this.deleteClan}
-                            className="col-1-2 btn btn-default btn-lg">Delete Clan</button>
-                        <button onClick={browserHistory.goBack} className="col-1-2 btn btn-default btn-lg">Go Back</button>
+                            className="col-1-2">Delete Clan</BigButton>
+                        <BigButton onClick={browserHistory.goBack} className="col-1-2">Go Back</BigButton>
                     </div>
                 </div>
             </Page>;

@@ -4,6 +4,7 @@ import Autocomplete from 'react-autocomplete';
 
 import Page from '../components/Page.jsx';
 import InputPair from '../components/InputPair.jsx';
+import BigButton from '../components/BigButton.jsx';
 
 import Api from '../utils/Api.jsx';
 import Toast from '../utils/Toast.jsx';
@@ -151,13 +152,13 @@ export default class InvitePlayer extends React.Component {
                     <p />
                     <p>2. Generate Link</p>
                     <div className="grid" style={{ 'marginTop': '15px' }}>
-                        <button disabled={this.state.disabled}
-                            onClick={this.invite} className="col-1-1 btn btn-default btn-lg">
+                        <BigButton disabled={this.state.disabled}
+                            onClick={this.invite} className="col-1-1">
                             Generate Invitation Link
-                        </button>
+                        </BigButton>
                     </div>{this.renderLink()}
                     <div className="grid" style={{ 'marginTop': '15px' }}>
-                        <button onClick={browserHistory.goBack} className="col-1-1 btn btn-default btn-lg" >Go Back</button>
+                        <BigButton onClick={browserHistory.goBack} className="col-1-1" >Go Back</BigButton>
                     </div>
                 </div>
             </Page>;

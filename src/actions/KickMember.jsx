@@ -3,6 +3,7 @@ import { browserHistory } from 'react-router';
 
 import Page from '../components/Page.jsx';
 import InputPair from '../components/InputPair.jsx';
+import BigButton from '../components/BigButton.jsx';
 
 import Api from '../utils/Api.jsx';
 import Utils from '../utils/Utils.jsx';
@@ -25,7 +26,7 @@ export default class KickMember extends React.Component {
     }
 
     kickMember() {
-        Api.post(`clans/kick?membershipId=${this.props.params.membershipid}`,function () {
+        Api.post(`clans/kick?membershipId=${this.props.params.membershipid}`, function () {
             browserHistory.goBack();
         });
     }
@@ -36,10 +37,10 @@ export default class KickMember extends React.Component {
             <InputPair disabled={true} label="Name" value={this.state.membership.player.login} />
             <InputPair disabled={true} label="Joined" value={Utils.formatTimestamp(this.state.membership.createTime)} />
             <div className="grid" style={{ 'marginTop': '15px' }}>
-                <button onClick={this.kickMember.bind(this)} className="col-1-2 btn btn-default btn-lg">
+                <BigButton onClick={this.kickMember.bind(this)} className="col-1-2">
                     Kick Member
-                </button>
-                <button onClick={browserHistory.goBack} className="col-1-2 btn btn-default btn-lg">Return to Clanpage</button>
+                </BigButton>
+                <BigButton onClick={browserHistory.goBack} className="col-1-2">Return to Clanpage</BigButton>
             </div>
         </div>;
     }
