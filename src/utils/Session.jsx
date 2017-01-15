@@ -1,9 +1,11 @@
 import ClientOAuth2 from 'client-oauth2';
 import axios from 'axios';
 
-const clientId = '83891c0c-feab-42e1-9ca7-515f94f808ef';
-const url = 'http://localhost:5000';
-const redirect_uri = 'http://localhost:8080/';
+import Config from './Config.jsx';
+
+const clientId = Config.getOAuth().clientId;
+const url = Config.getApiBaseUrl();
+const redirect_uri = Config.getOAuth().redirectUri;
 
 const oauth = new ClientOAuth2({
     clientId: clientId,
@@ -36,7 +38,7 @@ function validToken() {
 
 function grabUserData() {
     // we must make own call, because API cannot access us on initilization
-    axios.get('http://localhost:5000/clans/me',
+    axios.get(`${url}/clans/me`,
         { headers: { Authorization: `Bearer ${token.access_token}` } })
         .then((response) => {
             user = response.data;

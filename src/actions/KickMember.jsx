@@ -26,7 +26,7 @@ export default class KickMember extends React.Component {
     }
 
     kickMember() {
-        Api.post(`clans/kick?membershipId=${this.props.params.membershipid}`, function () {
+        Api.post(`/clans/kick?membershipId=${this.props.params.membershipid}`, function () {
             browserHistory.goBack();
         });
     }

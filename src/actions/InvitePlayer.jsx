@@ -70,7 +70,7 @@ export default class InvitePlayer extends React.Component {
             Toast.getContainer().error('You must select a player for invitation', 'No PLayer selected');
         }
         console.log(this.state.player);
-        Api.get(`clans/generateInvitationLink?clanId=${this.state.clan.id}&playerId=${this.state.player.id}`, (response) => {
+        Api.get(`/clans/generateInvitationLink?clanId=${this.state.clan.id}&playerId=${this.state.player.id}`, (response) => {
             this.setState({ token: response.data.jwtToken });
         });
         this.setState({ disabled: true });
@@ -158,7 +158,7 @@ export default class InvitePlayer extends React.Component {
                         </BigButton>
                     </div>{this.renderLink()}
                     <div className="grid" style={{ 'marginTop': '15px' }}>
-                        <BigButton onClick={browserHistory.goBack} className="col-1-1" >Go Back</BigButton>
+                        <BigButton onClick={browserHistory.goBack.bind(this)} className="col-1-1" >Go Back</BigButton>
                     </div>
                 </div>
             </Page>;

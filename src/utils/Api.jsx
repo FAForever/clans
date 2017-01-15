@@ -3,9 +3,11 @@ import axios from 'axios';
 
 import Session from './Session.jsx';
 import Toast from './Toast.jsx';
+import Config from './Config.jsx';
 
+const apiUrl = Config.getApiBaseUrl();
 let jsonApi = new JsonApi({
-    apiUrl: 'http://localhost:5000/data',
+    apiUrl: `${apiUrl}/data`,
     pluralize: false
 });
 
@@ -64,13 +66,13 @@ export default {
         this.getError(url, sucessCallback, this.error);
     },
     getError(url, sucessCallback, errorCallback) {
-        axios.get(`http://localhost:5000/${url}`,
+        axios.get(`${apiUrl}${url}`,
             getHeader())
             .then(sucessCallback)
             .catch(errorCallback);
     },
     post(url, sucessCallback) {
-        axios.post(`http://localhost:5000/${url}`,
+        axios.post(`${apiUrl}${url}`,
             getHeader())
             .then(sucessCallback)
             .catch((error) => {
@@ -78,7 +80,7 @@ export default {
             });
     },
     delete(url, sucessCallback) {
-        axios.delete(`http://localhost:5000/${url}`,
+        axios.delete(`${apiUrl}${url}`,
             getHeader())
             .then(sucessCallback)
             .catch((error) => {

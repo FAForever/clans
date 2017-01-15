@@ -24,7 +24,7 @@ export default class CreateClan extends React.Component {
         console.log(this.state);
         let params = `tag=${encodeURIComponent(this.state.tag)}&name=${encodeURIComponent(this.state.name)}`;
         params += `&description=${encodeURIComponent(this.state.description)}`;
-        Api.post(`clans/create?${params}`, function (response) {
+        Api.post(`/clans/create?${params}`, function (response) {
             browserHistory.push(`/clan/${response.data.id}`);
         });
     }

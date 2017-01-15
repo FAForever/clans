@@ -41,7 +41,7 @@ export default class TransferLeadership extends React.Component {
     }
 
     transferLeadership() {
-        Api.post(`clans/transferLeadership?clanId=${this.state.clan.id}&newLeaderId=${this.props.params.newleaderid}`, function () {
+        Api.post(`/clans/transferLeadership?clanId=${this.state.clan.id}&newLeaderId=${this.props.params.newleaderid}`, function () {
             browserHistory.goBack();
         });
     }
