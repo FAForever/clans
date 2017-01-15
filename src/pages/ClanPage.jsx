@@ -66,7 +66,6 @@ export default class ClanPage extends React.Component {
     }
 
     updateClan() {
-        console.log(this.state.clan);
         Api.json().update('clan', {
             id: this.state.clan.id,
             tag: this.state.clan.tag,
