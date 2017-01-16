@@ -73,6 +73,7 @@ export default {
     },
     post(url, sucessCallback) {
         axios.post(`${apiUrl}${url}`,
+            null,
             getHeader())
             .then(sucessCallback)
             .catch((error) => {
