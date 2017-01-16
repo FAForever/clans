@@ -90,6 +90,10 @@ export default {
     error(error) {
         Toast.getContainer().error(error.response.data.message, error.response.data.error);
     },
+    jsonError(errorData) {
+        console.error(errorData);
+        Toast.getContainer().error(errorData['']);
+    },
     json() {
         jsonApi.headers['Authorization'] = Session.getToken() ? `Bearer ${Session.getToken()}` : null;
         return jsonApi;
