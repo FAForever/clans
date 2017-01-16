@@ -19,6 +19,8 @@ export default class TransferLeadership extends React.Component {
             clan: null,
             confirmName: ''
         };
+        this.getNewLeader = this.getNewLeader.bind(this);
+        this.getNewLeaderName = this.getNewLeaderName.bind(this);
     }
 
     componentDidMount() {
@@ -27,8 +29,8 @@ export default class TransferLeadership extends React.Component {
     }
 
     componentDidUpdate() {
-        if (Session.getPlayer() && this.props.params.newleaderid == Session.getPlayer().id) {
-            Toast.getContainer().error('You are already the Leader');
+        if (this.state.clan && Session.getPlayer() && this.state.clan.leader.id != Session.getPlayer().id) {
+            Toast.getContainer().error('You are not the Clan Leader');
         }
     }
 
@@ -41,22 +43,33 @@ export default class TransferLeadership extends React.Component {
     }
 
     transferLeadership() {
-        Api.post(`/clans/transferLeadership?clanId=${this.state.clan.id}&newLeaderId=${this.props.params.newleaderid}`, function () {
+        Api.json().update('clan', {
+            id: this.state.clan.id,
+            leader: this.getNewLeader()
+        }).then(() => {
             browserHistory.goBack();
+        }).catch((error) => {
+            console.error(error);
         });
     }
 
-    getNewLeaderName() {
+    getNewLeader() {
         var newleaderid = this.props.params.newleaderid;
-        let newLeader = _.find(this.state.clan.memberships, function (m) {
-            return m.player.id == newleaderid;
-        }.bind(this));
+        let newLeader = _.find(this.state.clan.memberships, (membership) => {
+            return membership.player.id == newleaderid;
+        });
         if (newLeader) {
-            return newLeader.player.login;
+            return newLeader.player;
         }
         Toast.getContainer().error('Is the new leader still a clan member?', 'Cannot find new Leader');
         return null;
+    }
 
+    getNewLeaderName() {
+        if (this.getNewLeader()) {
+            return this.getNewLeader().login;
+        }
+        return null;
     }
 
     submitDisabled() {

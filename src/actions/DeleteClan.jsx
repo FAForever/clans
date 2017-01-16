@@ -33,9 +33,9 @@ export default class DeleteClan extends React.Component {
     }
 
     deleteClan() {
-        Api.delete(`/clans/delete?clanid=${this.state.clan.id}`, () => {
-            browserHistory.push('/');
-        });
+        Api.json().destroy('clan', this.state.clan.id)
+        .then(() => browserHistory.push('/'))
+        .catch(Api.jsonError);
     }
 
     render() {
