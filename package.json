@@ -34,6 +34,8 @@
     "react-toastr": "^2.8.2",
     "sass-loader": "^4.0.2",
     "simple-grid2": "^1.0.1",
+    "style": "0.0.3",
+    "style-loader": "^0.13.1",
     "webpack": "^1.13.3"
   }
 }
