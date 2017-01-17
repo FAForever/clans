@@ -34,7 +34,7 @@ Don't forget to run the tests (currently only eslint)
 # Configuration
 
 You must maybe adapt some environment variables, see `.env.example`.
-In Development you find some fallback values in `webpack.config.js`
+In Development Mode you find some fallback values in `webpack.config.js`
 
 Don't forget to add a OAuth ClientId to the faf database, e.g.
 
@@ -45,7 +45,7 @@ Don't forget to add a OAuth ClientId to the faf database, e.g.
 
 See the `.travis.yml` and `Dockerfile`
     
-Visit http://localhost:8080/ to see the app.
+Visit [http://localhost:8080/](http://localhost:8080/) to see the app.
 
 # Technolgies
 
