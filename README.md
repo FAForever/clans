@@ -54,7 +54,7 @@ Visit [http://localhost:8080/](http://localhost:8080/) to see the app.
 * Devour as JSON API Client: https://github.com/twg/devour
 * OAuth-Client: https://github.com/mulesoft/js-client-oauth2 
 * Lodash as JavaScript Helper: https://github.com/lodash/lodash
-* jwt simple to generate [JWT Token](https://jwt.io/) for clan invitation link: https://github.com/hokaccha/node-jwt-simple
+* jwt simple to read [JWT Token](https://jwt.io/) for clan invitation link: https://github.com/hokaccha/node-jwt-simple
 * simple-grid2 for layout: https://github.com/CezaryDanielNowak/Simple-Grid2
 * webpack-dev-server for faster development, e.g. LiveReload: https://github.com/webpack/webpack-dev-server
 
