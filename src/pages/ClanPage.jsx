@@ -37,11 +37,20 @@ export default class ClanPage extends React.Component {
             return;
         }
         var dataSet = [];
+        var player = Session.getPlayer();
         for (let membership of this.state.clan.memberships) {
             let button = '';
-            if (this.isLeader()) {
+            let isLeader = this.isLeader();
+            let me = player.id == membership.player.id;
+            if(!isLeader && me) {
+                button += `<button onclick="window.myHistory.push('/action/leaveClan/${this.state.clan.id}')" class="btn btn-primary btn-xs">Leave Clan</button>`;
+            }
+            if (isLeader && !me) {
                 button += `<button onclick="window.myHistory.push('/action/kick/${membership.id}')" class="btn btn-primary btn-xs">Kick Member</button>`;
                 button += `<button onclick="window.myHistory.push('/action/transferLeadership/${this.state.clan.id}/${membership.player.id}')" class="btn btn-primary btn-xs">Make Leader</button>`;
+            }
+            if(isLeader && me) {
+                button += 'Leader cannot leave';
             }
             dataSet.push([membership.player.login, Utils.formatTimestamp(membership.createTime), button]);
         }
