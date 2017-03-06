@@ -88,8 +88,10 @@ export default {
                 this.error(error);
             });
     },
-    error(error) {
-        Toast.getContainer().error(error.response.data.message, error.response.data.error);
+    error(errors) {
+        for (let error of errors.response.data.errors) {
+            Toast.getContainer().error(error.detail, error.title);
+        }
     },
     jsonError(errorData) {
         console.error(errorData);
