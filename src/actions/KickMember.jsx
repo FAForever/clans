@@ -17,7 +17,7 @@ export default class KickMember extends React.Component {
     }
 
     componentDidMount() {
-        Api.json().one('clan_membership', this.props.params.membershipid).get({ include: 'player,clan' })
+        Api.json().one('clanMembership', this.props.params.membershipid).get({ include: 'player,clan' })
             .then(this.setData.bind(this)).catch(error => console.error(error));
     }
 
@@ -26,13 +26,12 @@ export default class KickMember extends React.Component {
     }
 
     kickMember() {
-        Api.json().destroy('clan_membership', this.props.params.membershipid)
+        Api.json().destroy('clanMembership', this.props.params.membershipid)
         .then(() => browserHistory.goBack())
         .catch(Api.jsonError);
     }
 
     renderMembership() {
-        console.log(this.state.membership);
         return <div className="well bs-component">
             <InputPair disabled={true} label="Name" value={this.state.membership.player.login} />
             <InputPair disabled={true} label="Joined" value={Utils.formatTimestamp(this.state.membership.createTime)} />

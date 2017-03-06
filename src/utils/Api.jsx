@@ -50,7 +50,7 @@ jsonApi.define('player', {
     //Bug in Devour: https://github.com/twg/devour/issues/47
     // clanMemberships: {
     //     jsonApi: 'hasMany',
-    //     type: 'clan_membership'
+    //     type: 'clanMembership'
     // }
 });
 

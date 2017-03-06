@@ -13,6 +13,7 @@ import KickMember from './actions/KickMember.jsx';
 import TransferLeadership from './actions/TransferLeadership.jsx';
 import InvitePlayer from './actions/InvitePlayer.jsx';
 import AcceptInvitation from './actions/AcceptInvitation.jsx';
+import LeaveClan from './actions/LeaveClan.jsx';
 import './main.scss';
 import '../node_modules/simple-grid2/simplegrid.css';
 
@@ -33,6 +34,7 @@ ReactDOM.render(
         <Route path="/action/transferLeadership/:clanid/:newleaderid" component={TransferLeadership} />
         <Route path="/action/invitePlayer/:clanid" component={InvitePlayer} />
         <Route path="/action/accept" component={AcceptInvitation} />
+        <Route path="/action/leaveClan/:clanid" component={LeaveClan} />
       </Route>
     </Router>,
     document.getElementById('app')

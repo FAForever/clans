@@ -11,6 +11,8 @@ import Warning from '../components/Warning.jsx';
 import BigButton from '../components/BigButton.jsx';
 import Page from '../components/Page.jsx';
 
+import _ from 'lodash';
+
 export default class ClanPage extends React.Component {
     constructor(props) {
         super(props);
@@ -23,7 +25,6 @@ export default class ClanPage extends React.Component {
         };
         this.updated = false; // prevent DatTable to reinit if you visit the page again
         this.updateClan = this.updateClan.bind(this);
-        this.deleteClan = this.deleteClan.bind(this);
     }
 
     componentDidMount() {
@@ -62,6 +63,14 @@ export default class ClanPage extends React.Component {
         return Session.getPlayer() && this.state.clan.leader.id == Session.getPlayer().id;
     }
 
+    isClanMember() {
+        let player = Session.getPlayer();
+        let myMembership = _.find(this.state.clan.memberships, (membership) => {
+            return membership.player.id == player.id;
+        });
+        return myMembership;
+    }
+
     dirty() {
         return this.state.clan.tag != this.state.oldTag
             || this.state.clan.name != this.state.oldName
@@ -82,10 +91,6 @@ export default class ClanPage extends React.Component {
         });
     }
 
-    deleteClan() {
-
-    }
-
     renderClan() {
         return <div>
             {this.dirty() &&
@@ -96,18 +101,18 @@ export default class ClanPage extends React.Component {
                     tag={this.state.clan.tag} onTagChange={(value) => {
                         this.state.clan.tag = value;
                         this.setState(this.state);
-                    } }
+                    }}
                     name={this.state.clan.name} onNameChange={(value) => {
                         this.state.clan.name = value;
                         this.setState(this.state);
-                    } }
+                    }}
                     leader={this.state.clan.leader.login}
                     founder={this.state.clan.founder.login}
                     created={Utils.formatTimestamp(this.state.clan.createTime)}
                     description={this.state.clan.description || ''} onDescChange={(value) => {
                         this.state.clan.description = value;
                         this.setState(this.state);
-                    } } />
+                    }} />
                 {this.isLeader() &&
                     <div className="grid" style={{ marginTop: '15px' }}>
                         <BigButton disabled={!this.dirty()}
@@ -136,6 +141,13 @@ export default class ClanPage extends React.Component {
                     </tr>
                 </thead>
             </table>
+            {this.isClanMember() &&
+                <div className="grid">
+                    <br />
+                    <Link to={`/action/leaveClan/${this.state.clan.id}`}
+                        className="col-1-1 btn btn-default btn-lg">Leave Clan</Link>
+                </div>
+            }
         </div>;
     }
 
