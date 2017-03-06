@@ -27,11 +27,11 @@ jsonApi.define('clan', {
     },
     memberships: {
         jsonApi: 'hasMany',
-        type: 'clan_membership'
+        type: 'clanMembership'
     }
 });
 
-jsonApi.define('clan_membership', {
+jsonApi.define('clanMembership', {
     createTime: null,
     updateTime: null,
     clan: {
