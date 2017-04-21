@@ -47,6 +47,38 @@ See the `.travis.yml` and `Dockerfile`
     
 Visit [http://localhost:8080/](http://localhost:8080/) to see the app.
 
+# Features
+This list ist a little overview, maybe some kind of specification for the clan app
+
+#### General
+* A user can login with the faf credentials over OAuth
+* A user can logout 
+* A logged in user see his clan
+* A logged in user has a shortcut to navigate to his clan
+* A logged in user can create a new clan
+
+#### Clan List
+* A user can see a list of clans
+* A user can search in this list
+* A user sort the list of clans (by Name, Taag, Leaer, Member Count)
+* A user can see get navigate to the Clan Page
+
+#### Clan Page
+* A user see some basic data about the clan (name, tag, description, leader, founder, foundet at)
+* A user see a list of all clan members
+* A user can sort the list of clan members
+* A user can search the list of clan members
+* A clan member clan leave the clan
+* A clan leader can edit the basic clan data except founder and created at
+* A clan leader can invite players see Clan Invitation
+* A clan leader can delete the clan
+* A clan leader can kick members
+* A clan leader can transfer the leadership to a clan member
+
+#### Clan Invitation
+* A clan leader can generate an invitation link
+* A user can with the correct invitation link join the clan
+
 # Technolgies
 
 * React for building user interfaces: https://github.com/facebook/react
