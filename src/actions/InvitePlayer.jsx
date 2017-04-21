@@ -88,7 +88,7 @@ export default class InvitePlayer extends React.Component {
         // TODO: tune this
         this.setState({ value, loading: true, disabled: true });
         Api.json().findAll('player', {
-            filter: `lowerCaseLogin==${value}*`,
+            'filter[player.lowerCaseLogin][prefix]': value,
             page: { size: pagesize },
             sort: 'lowerCaseLogin'
         })
