@@ -41,7 +41,7 @@ export default class ClanPage extends React.Component {
         for (let membership of this.state.clan.memberships) {
             let button = '';
             let isLeader = this.isLeader();
-            let me = player.id == membership.player.id;
+            let me = player != null && player.id == membership.player.id;
             if(!isLeader && me) {
                 button += `<button onclick="window.myHistory.push('/action/leaveClan/${this.state.clan.id}')" class="btn btn-primary btn-xs">Leave Clan</button>`;
             }
@@ -74,6 +74,9 @@ export default class ClanPage extends React.Component {
 
     isClanMember() {
         let player = Session.getPlayer();
+        if(player == null) {
+            return false;
+        }
         let myMembership = _.find(this.state.clan.memberships, (membership) => {
             return membership.player.id == player.id;
         });
