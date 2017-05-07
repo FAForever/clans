@@ -1,6 +1,8 @@
+import Timestamp from 'time-stamp';
+
 export default {
-    formatTimestamp(timestamp) {
-        let d = timestamp != null ? new Date(timestamp) : new Date();
-        return d.toISOString().slice(0, 10);
+    formatTimestamp(myTimestamp) {
+        let d = myTimestamp != null ? new Date(myTimestamp) : new Date();
+        return Timestamp('YYYY-MM-DD HH:mm:ss', d);
     }
 };
