@@ -15,8 +15,9 @@ jsonApi.define('clan', {
     description: '',
     name: '',
     tag: '',
-    tagcolor: null,
+    tagColor: null,
     createTime: null,
+    updateTime: null,
     founder: {
         jsonApi: 'hasOne',
         type: 'player'
@@ -47,11 +48,23 @@ jsonApi.define('clanMembership', {
 jsonApi.define('player', {
     login: '',
     eMail: '',
-    //Bug in Devour: https://github.com/twg/devour/issues/47
-    // clanMemberships: {
-    //     jsonApi: 'hasMany',
-    //     type: 'clanMembership'
-    // }
+    lowerCaseLogin: '',
+    userAgent: '',
+    createTime: null,
+    updateTime: null,
+    clanMemberships: {
+        jsonApi: 'hasMany',
+        type: 'clanMembership'
+    },
+    globalRating: {
+        jsonApi: 'hasOne',
+    },
+    banInfo: {
+        jsonApi: 'hasOne'
+    },
+    ladder1v1Rating: {
+        jsonApi: 'hasOne'
+    }
 });
 
 function getHeader() {
