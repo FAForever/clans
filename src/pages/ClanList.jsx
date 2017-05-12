@@ -14,7 +14,7 @@ export default class ClanList extends React.Component {
     }
 
     componentDidMount() {
-        Api.json().all('clan').get({ include: 'founder,leader,memberships' })
+        Api.json().all('clan').get({ include: 'founder,leader,memberships', page: { size: 1000 } })
             .then(this.setData.bind(this)).catch(error => console.error(error));
     }
 
