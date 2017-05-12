@@ -31,6 +31,10 @@ export default class ClanPage extends React.Component {
         Api.json().one('clan', this.props.params.clanid).get({ include: 'memberships,memberships.player,founder,leader' })
             .then(this.setData.bind(this)).catch(error => console.error(error));
     }
+    componentWillReceiveProps() {
+        // TODO: use state if we are pure react and get rid of DataTable
+        window.location.reload();
+    }
 
     componentDidUpdate() {
         if (!this.state.clan || this.updated) {
