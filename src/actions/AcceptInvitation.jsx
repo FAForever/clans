@@ -26,7 +26,7 @@ export default class AcceptInvitation extends React.Component {
     }
 
     joinClan() {
-        Api.post(`clans/joinClan?token=${this.state.token}`, (response) => {
+        Api.post(`/clans/joinClan?token=${this.state.token}`, (response) => {
             console.log(response);
         });
     }
