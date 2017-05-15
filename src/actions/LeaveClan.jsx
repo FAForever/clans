@@ -47,7 +47,7 @@ export default class LeaveClan extends React.Component {
 
     renderMembership() {
         return <div className="well bs-component">
-            <Warning message="This operation is undoable" />
+             <Warning message="You can't revert this operation" />
             <p>Please confirm that you want to leave the following clan:</p>
             <InputPair disabled={true} label="Clan Tag" value={this.state.clan.tag} />
             <InputPair disabled={true} label="Clan Name" value={this.state.clan.name} />

@@ -46,7 +46,7 @@ export default class DeleteClan extends React.Component {
         }
         if (this.state.clan) {
             return <Page title="Delete Clan">
-                <Warning message="This operation is undoable" />
+                <Warning message="You can't revert this operation" />
                 <div className="well bs-component">
                     <p>This operation will kick all members and delete the whole clan.</p>
                     <InputPair disabled={true} label="Clan Tag" value={this.state.clan.tag} />

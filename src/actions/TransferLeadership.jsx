@@ -78,7 +78,7 @@ export default class TransferLeadership extends React.Component {
 
     renderData() {
         return <div>
-            <Warning message="This operation is undoable" />
+            <Warning message="You can't revert this operation" />
             <div className="well bs-component">
                 <p>This operation transfer the leadership of your clanto a new member.</p>
                 <InputPair disabled={true} label="Clan Tag" value={this.state.clan.tag} />
