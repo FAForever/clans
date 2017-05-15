@@ -67,7 +67,7 @@ export default class InvitePlayer extends React.Component {
 
     invite() {
         if (this.state.player == null) {
-            Toast.getContainer().error('You must select a player for invitation', 'No PLayer selected');
+            Toast.getContainer().error('You must select a player for invitation', 'No Player selected');
         }
         console.log(this.state.player);
         Api.get(`/clans/generateInvitationLink?clanId=${this.state.clan.id}&playerId=${this.state.player.id}`, (response) => {
@@ -88,9 +88,9 @@ export default class InvitePlayer extends React.Component {
         // TODO: tune this
         this.setState({ value, loading: true, disabled: true });
         Api.json().findAll('player', {
-            'filter[player.lowerCaseLogin][prefix]': value,
+            filter: `login==${value}*`,
             page: { size: pagesize },
-            sort: 'lowerCaseLogin'
+            sort: 'login'
         })
             .then(function (data) {
                 console.log(data);
