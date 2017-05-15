@@ -20,17 +20,26 @@ export default class NavBar extends React.Component {
 
 
     renderUserData() {
+        if (!Session.loggedIn()) {
+            return;
+        }
         if (Session.getClan()) {
             let clan = Session.getClan();
             return <li><Link to={`/clan/${clan.id}`} activeClassName="active">My Clan: {clan.tag}</Link></li>;
+        } else {
+            return <li>
+                <Link to="/action/createClan">
+                    <i className="fa fa-plus-circle"></i> Create Clan
+                </Link>
+            </li>;
         }
     }
 
     renderLogin() {
         if (Session.loggedIn()) {
-            return <li style={{cursor: 'pointer'}}><p className="navbar-text" onClick={Session.logout}>Logout: {Session.getPlayername() || ''}</p></li>;
+            return <li style={{ cursor: 'pointer' }}><a onClick={Session.logout}>Logout: {Session.getPlayername() || ''}</a></li>;
         }
-        return <li style={{cursor: 'pointer'}}><p className="navbar-text" onClick={Session.login}>Login</p></li>;
+        return <li style={{ cursor: 'pointer' }}><a onClick={Session.login}>Login</a></li>;
     }
 
     render() {
