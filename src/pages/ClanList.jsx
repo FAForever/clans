@@ -28,38 +28,64 @@ export default class ClanList extends React.Component {
             Header: 'Members',
             id: 'member',
             accessor: clan => clan.memberships.length,
-            width: 80
+            width: 80,
+            filterable: false
         }, {
             Header: 'Actions',
             accessor: 'action',
             // TODO: find devoour? bug
             Cell: props => //<Link to={`clan/${props.original.id}`}>
                 <a href={`clan/${props.original.id}`}>
-                <button alt={props.original.id} className="btn btn-primary btn-xs">ClanPage</button>
+                    <button alt={props.original.id} className="btn btn-primary btn-xs">ClanPage</button>
                 </a>,
             //</Link>,
             width: 85,
-            hideFilter: true
+            filterable: false
         }];
         this.fetchData = this.fetchData.bind(this);
+        this.sortString = this.sortString.bind(this);
+        this.filterString = this.filterString.bind(this);
     }
 
     fetchData(tableState) {
         console.log(tableState);
         this.setState({ loading: true });
         Api.json().findAll('clan',
-            {
+            this.sortString(
+            this.filterString({
                 page:
                 {
                     size: tableState.pageSize,
                     number: tableState.page + 1,
                     totals: true
                 },
-                include: 'founder,leader,memberships'
-            })
+                include: 'founder,leader,memberships',
+            }, tableState.filtered), tableState.sorted))
             .then(data => {
                 this.setState({ data, loading: false, pages: data.meta.page.totalPages });
             }).catch(error => console.error(error));
+    }
+
+    sortString(src, sortFields) {
+        if(sortFields.length == 1) {
+            let field = sortFields[0].id;
+            if (field == 'name' || field == 'tag') {
+                let prefix = (sortFields[0].desc === true) ? '-' : '';
+                src.sort = prefix + field;
+            }
+        }
+        return src;
+    }
+    filterString(src, filterFields) {
+        // only filter last added column
+        if(filterFields.length > 0) {
+            let filter = '';
+            filterFields.forEach(field => {
+                filter = `${field.id}==*${field.value}*`;
+            });
+            src.filter = filter;
+        }
+        return src;
     }
 
     render() {
@@ -70,6 +96,8 @@ export default class ClanList extends React.Component {
                 columns={this.columns}
                 manual // Forces table not to paginate or sort automatically, so we can handle it server-side
                 defaultPageSize={10}
+                filterable
+                sorting={this.state.sorting}
                 data={this.state.data} // Set the rows to be displayed
                 pages={this.state.pages} // Display the total number of pages
                 loading={this.state.loading} // Display the loading overlay when we need it
