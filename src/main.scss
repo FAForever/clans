@@ -1,3 +1,10 @@
+$color-main: #c8c8c8;
+$color-header: #1C1E22;
+$color-highlight: rgba(255, 0, 0, .75);
+$color-1: #2E3338;
+$color-2: #353A41;
+
+
 h1, h2 {
 	font-family: 'supcom';
 }
@@ -47,4 +54,31 @@ textarea {
 
 .menu {
   border: solid 1px #ccc;
+}
+
+// ### react-table ### 
+
+.rt-th {
+  background-color: $color-header;
+}
+
+div .-odd {
+  background-color: $color-1;
+}
+
+div .-even {
+  background-color: $color-2;
+}
+
+.-sort-asc {
+  box-shadow: inset 0 3px 0 0 $color-highlight !important;
+}
+
+.-sort-desc {
+  box-shadow: inset 0 -3px 0 0 $color-highlight !important;
+}
+
+.-btn {
+  height: inherit !important;
+  color: $color-main !important;
 }

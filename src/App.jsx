@@ -14,8 +14,11 @@ import TransferLeadership from './actions/TransferLeadership.jsx';
 import InvitePlayer from './actions/InvitePlayer.jsx';
 import AcceptInvitation from './actions/AcceptInvitation.jsx';
 import LeaveClan from './actions/LeaveClan.jsx';
-import './main.scss';
+
 import '../node_modules/simple-grid2/simplegrid.css';
+import 'react-table/react-table.css';
+import './main.scss';
+
 
 import './utils/Session.jsx';
 

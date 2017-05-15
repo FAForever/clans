@@ -1,72 +1,80 @@
 import React from 'react';
+import ReactTable from 'react-table';
+import { Link } from 'react-router';
 
 import Api from '../utils/Api.jsx';
-
 import Page from '../components/Page.jsx';
 
 export default class ClanList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: null
+            data: [],
+            pages: null,
+            loading: true
         };
-        this.updated = false; // prevent DatTable to reinit if you visit the page again
+        this.columns = [{
+            Header: 'Name',
+            accessor: 'name'
+        }, {
+            Header: 'Tag',
+            accessor: 'tag',
+            width: 55
+        }, {
+            Header: 'Leader',
+            accessor: 'leader.login',
+            width: 150
+        }, {
+            Header: 'Members',
+            id: 'member',
+            accessor: clan => clan.memberships.length,
+            width: 80
+        }, {
+            Header: 'Actions',
+            accessor: 'action',
+            // TODO: find devoour? bug
+            Cell: props => //<Link to={`clan/${props.original.id}`}>
+                <a href={`clan/${props.original.id}`}>
+                <button alt={props.original.id} className="btn btn-primary btn-xs">ClanPage</button>
+                </a>,
+            //</Link>,
+            width: 85,
+            hideFilter: true
+        }];
+        this.fetchData = this.fetchData.bind(this);
     }
 
-    componentDidMount() {
-        Api.json().all('clan').get({ include: 'founder,leader,memberships', page: { size: 1000 } })
-            .then(this.setData.bind(this)).catch(error => console.error(error));
-    }
-
-    componentDidUpdate() {
-        if (!this.state.list || this.updated) {
-            return;
-        }
-        var dataSet = [];
-        for (let clan of this.state.list) {
-            var button = `<button onclick="window.myHistory.push('clan/${clan.id}')" class="btn btn-primary btn-xs">Open Clanpage</button>`;
-            dataSet.push([clan.name, clan.tag, clan.leader.login, clan.memberships.length, button]);
-        }
-        // eslint-disable-next-line no-undef
-        $('#clanlist').DataTable({
-            data: dataSet
-        });
-        this.updated = true;
-    }
-
-    setData(data) {
-        if (data == null) {
-            console.log('Api not available');
-        }
-        this.setState({ list: data });
-    }
-
-    renderLoading() {
-        return 'Loading ...';
-    }
-
-    renderData() {
-        return <table id="clanlist" className="table table-striped table-bordered" cellSpacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Tag</th>
-                    <th>Leader</th>
-                    <th>Members</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-        </table>;
-    }
-
-    render2() {
-        if (this.state.list) {
-            return this.renderData();
-        }
-        return this.renderLoading();
+    fetchData(tableState) {
+        console.log(tableState);
+        this.setState({ loading: true });
+        Api.json().findAll('clan',
+            {
+                page:
+                {
+                    size: tableState.pageSize,
+                    number: tableState.page + 1,
+                    totals: true
+                },
+                include: 'founder,leader,memberships'
+            })
+            .then(data => {
+                this.setState({ data, loading: false, pages: data.meta.page.totalPages });
+            }).catch(error => console.error(error));
     }
 
     render() {
-        return <Page title="Clans">{this.render2()}</Page>;
+        return <Page title="Clans">
+            <ReactTable
+                //showFilters={true}
+                //defaultFilterMethod={this.filter}
+                columns={this.columns}
+                manual // Forces table not to paginate or sort automatically, so we can handle it server-side
+                defaultPageSize={10}
+                data={this.state.data} // Set the rows to be displayed
+                pages={this.state.pages} // Display the total number of pages
+                loading={this.state.loading} // Display the loading overlay when we need it
+                onFetchData={this.fetchData} // Request new data when things change
+            />
+        </Page>;
     }
 }
