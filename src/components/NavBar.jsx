@@ -28,9 +28,9 @@ export default class NavBar extends React.Component {
 
     renderLogin() {
         if (Session.loggedIn()) {
-            return <li><p className="navbar-text" onClick={Session.logout}>Logout: {Session.getPlayername() || ''}</p></li>;
+            return <li style={{cursor: 'pointer'}}><p className="navbar-text" onClick={Session.logout}>Logout: {Session.getPlayername() || ''}</p></li>;
         }
-        return <li><p className="navbar-text" onClick={Session.login}>Login</p></li>;
+        return <li style={{cursor: 'pointer'}}><p className="navbar-text" onClick={Session.login}>Login</p></li>;
     }
 
     render() {
