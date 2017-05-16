@@ -2,6 +2,7 @@ import React from 'react';
 import ReactTable from 'react-table';
 import { Link } from 'react-router';
 
+import Utils from '../utils/Utils.jsx';
 import Api from '../utils/Api.jsx';
 import Page from '../components/Page.jsx';
 
@@ -13,6 +14,8 @@ export default class ClanList extends React.Component {
             pages: null,
             loading: true
         };
+        // TODO: not working in the state, find out why
+        this.sorted = [];
         this.columns = [{
             Header: 'Name',
             accessor: 'name'
@@ -31,6 +34,12 @@ export default class ClanList extends React.Component {
             width: 80,
             filterable: false
         }, {
+            Header: 'Created',
+            id: 'createTime',
+            accessor: clan => Utils.formatTimestamp(clan.createTime),
+            width: 155,
+            filterable: false
+        }, {
             Header: 'Actions',
             accessor: 'action',
             // TODO: find devoour? bug
@@ -43,6 +52,7 @@ export default class ClanList extends React.Component {
         this.fetchData = this.fetchData.bind(this);
         this.sortString = this.sortString.bind(this);
         this.filterString = this.filterString.bind(this);
+        this.onSortedChange = this.onSortedChange.bind(this);
     }
 
     fetchData(tableState) {
@@ -63,11 +73,11 @@ export default class ClanList extends React.Component {
             }).catch(error => console.error(error));
     }
 
-    sortString(src, sortFields) {
-        if (sortFields.length == 1) {
-            let field = sortFields[0].id;
-            if (field == 'name' || field == 'tag') {
-                let prefix = (sortFields[0].desc === true) ? '-' : '';
+    sortString(src) {
+        if (this.sorted.length == 1) {
+            let field = this.sorted[0].id;
+            if (field == 'name' || field == 'tag' || field == 'createTime') {
+                let prefix = (this.sorted[0].desc === true) ? '-' : '';
                 src.sort = prefix + field;
             }
         }
@@ -76,16 +86,24 @@ export default class ClanList extends React.Component {
     filterString(src, filterFields) {
         let filter = '';
         filterFields.forEach(field => {
-            if(filter != '') {
+            if (filter != '') {
                 filter += ';';
             }
             filter += `${field.id}==*${field.value}*`;
-        });       
-        if(filter != '') {
+        });
+        if (filter != '') {
             src.filter = filter;
         }
         return src;
     }
+    onSortedChange(sorted, column) {
+        if (column.id == 'name' || column.id == 'tag' || column.id == 'createTime') {
+            this.sorted = sorted;
+        } else {
+            this.sorted = [];
+        }
+    }
+
 
     render() {
         return <Page title="Clans">
@@ -96,7 +114,8 @@ export default class ClanList extends React.Component {
                 manual // Forces table not to paginate or sort automatically, so we can handle it server-side
                 defaultPageSize={10}
                 filterable
-                sorting={this.state.sorting}
+                sorted={this.sorted}
+                onSortedChange={this.onSortedChange}
                 data={this.state.data} // Set the rows to be displayed
                 pages={this.state.pages} // Display the total number of pages
                 loading={this.state.loading} // Display the loading overlay when we need it
