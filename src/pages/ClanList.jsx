@@ -17,6 +17,11 @@ export default class ClanList extends React.Component {
         // TODO: not working in the state, find out why
         this.sorted = [];
         this.columns = [{
+            Header: '#',
+            accessor: 'id',
+            width: 50,
+            filterable: false
+        }, {
             Header: 'Name',
             accessor: 'name'
         }, {
