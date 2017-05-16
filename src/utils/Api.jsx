@@ -15,6 +15,7 @@ jsonApi.define('clan', {
     description: '',
     name: '',
     tag: '',
+    websiteUrl: '',
     tagColor: null,
     createTime: null,
     updateTime: null,

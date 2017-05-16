@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactTable from 'react-table';
-//import { Link } from 'react-router';
+import { Link } from 'react-router';
 
 import Api from '../utils/Api.jsx';
 import Page from '../components/Page.jsx';
@@ -34,11 +34,9 @@ export default class ClanList extends React.Component {
             Header: 'Actions',
             accessor: 'action',
             // TODO: find devoour? bug
-            Cell: props => //<Link to={`clan/${props.original.id}`}>
-                <a href={`clan/${props.original.id}`}>
-                    <button alt={props.original.id} className="btn btn-primary btn-xs">ClanPage</button>
-                </a>,
-            //</Link>,
+            Cell: props => <Link to={`clan/${props.original.id}`}>
+                <button alt={props.original.id} className="btn btn-primary btn-xs">ClanPage</button>
+            </Link>,
             width: 85,
             filterable: false
         }];
@@ -48,26 +46,25 @@ export default class ClanList extends React.Component {
     }
 
     fetchData(tableState) {
-        console.log(tableState);
         this.setState({ loading: true });
         Api.json().findAll('clan',
             this.sortString(
-            this.filterString({
-                page:
-                {
-                    size: tableState.pageSize,
-                    number: tableState.page + 1,
-                    totals: true
-                },
-                include: 'founder,leader,memberships',
-            }, tableState.filtered), tableState.sorted))
+                this.filterString({
+                    page:
+                    {
+                        size: tableState.pageSize,
+                        number: tableState.page + 1,
+                        totals: true
+                    },
+                    include: 'founder,leader,memberships',
+                }, tableState.filtered), tableState.sorted))
             .then(data => {
                 this.setState({ data, loading: false, pages: data.meta.page.totalPages });
             }).catch(error => console.error(error));
     }
 
     sortString(src, sortFields) {
-        if(sortFields.length == 1) {
+        if (sortFields.length == 1) {
             let field = sortFields[0].id;
             if (field == 'name' || field == 'tag') {
                 let prefix = (sortFields[0].desc === true) ? '-' : '';
@@ -77,12 +74,14 @@ export default class ClanList extends React.Component {
         return src;
     }
     filterString(src, filterFields) {
-        // only filter last added column
-        if(filterFields.length > 0) {
-            let filter = '';
-            filterFields.forEach(field => {
-                filter = `${field.id}==*${field.value}*`;
-            });
+        let filter = '';
+        filterFields.forEach(field => {
+            if(filter != '') {
+                filter += ';';
+            }
+            filter += `${field.id}==*${field.value}*`;
+        });       
+        if(filter != '') {
             src.filter = filter;
         }
         return src;

@@ -8,7 +8,7 @@ var APP_DIR = path.resolve(__dirname, 'src');
 const prod = process.argv.indexOf('-p') !== -1;
 
 const definePlugin = new webpack.DefinePlugin({
-    'process.env.API_BASE_URL': JSON.stringify(process.env.API_BASE_URL || 'http://localhost:8010'),
+    'process.env.API_BASE_URL': JSON.stringify(process.env.API_BASE_URL || 'https://api.dev.faforever.com'),
     'process.env.OAUTH_CLIENT_ID': JSON.stringify(process.env.OAUTH_CLIENT_ID || '83891c0c-feab-42e1-9ca7-515f94f808ef'),
     'process.env.OAUTH_REDIRECT_URI': JSON.stringify(process.env.OAUTH_REDIRECT_URI || 'http://localhost:8080'),
     'process.env.NODE_ENV': JSON.stringify(prod ? 'production' : 'development')
