@@ -53,11 +53,9 @@ export default class NavBar extends React.Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="#">
-                           
-                                <img alt="FaF" src="/images/faf_32x32.png" />
-                           
-                        </a>
+                        <Link to="/" className="navbar-brand" >
+                            <img alt="FaF" src="/images/faf_32x32.png" className="hoverZoom" />
+                        </Link>
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav">

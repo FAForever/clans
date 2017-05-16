@@ -56,6 +56,25 @@ textarea {
   border: solid 1px #ccc;
 }
 
+// ### Slow Zoom home image on hover
+// http://stackoverflow.com/a/15757620
+
+.hoverZoom {
+    -webkit-transition: all 0.5s ease; /* Safari and Chrome */
+    -moz-transition: all 0.5s ease; /* Firefox */
+    -ms-transition: all 0.5s ease; /* IE 9 */
+    -o-transition: all 0.5s ease; /* Opera */
+    transition: all 0.5s ease;
+}
+
+.hoverZoom:hover {
+    -webkit-transform:scale(1.1); /* Safari and Chrome */
+    -moz-transform:scale(1.1); /* Firefox */
+    -ms-transform:scale(1.1); /* IE 9 */
+    -o-transform:scale(1.1); /* Opera */
+     transform:scale(1.1);
+}
+
 // ### react-table ### 
 
 .rt-th {
