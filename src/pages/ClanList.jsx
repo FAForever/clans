@@ -41,8 +41,7 @@ export default class ClanList extends React.Component {
             filterable: false
         }, {
             Header: 'Actions',
-            accessor: 'action',
-            // TODO: find devoour? bug
+            id: 'action',
             Cell: props => <Link to={`clan/${props.original.id}`}>
                 <button alt={props.original.id} className="btn btn-primary btn-xs">ClanPage</button>
             </Link>,
@@ -108,8 +107,6 @@ export default class ClanList extends React.Component {
     render() {
         return <Page title="Clans">
             <ReactTable
-                //showFilters={true}
-                //defaultFilterMethod={this.filter}
                 columns={this.columns}
                 manual // Forces table not to paginate or sort automatically, so we can handle it server-side
                 defaultPageSize={10}

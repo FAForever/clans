@@ -22,9 +22,6 @@ import './main.scss';
 
 import './utils/Session.jsx';
 
-// used for jquery Links
-window.myHistory = browserHistory;
-
 ReactDOM.render(
     <Router history={browserHistory }>
       <Route>

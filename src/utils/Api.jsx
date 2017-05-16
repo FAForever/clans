@@ -53,6 +53,8 @@ jsonApi.define('player', {
     userAgent: '',
     createTime: null,
     updateTime: null,
+    email: '',
+    steamId: '',
     clanMemberships: {
         jsonApi: 'hasMany',
         type: 'clanMembership'

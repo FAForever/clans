@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import ReactTable from 'react-table';
 
 import Api from '../utils/Api.jsx';
 import Utils from '../utils/Utils.jsx';
@@ -23,46 +24,61 @@ export default class ClanPage extends React.Component {
             oldName: null,
             oldDesc: null
         };
-        this.updated = false; // prevent DatTable to reinit if you visit the page again
+        this.columns = [{
+            Header: 'Name',
+            accessor: 'player.login'
+        }, {
+            Header: 'Joined',
+            id: 'createTime',
+            accessor: data => Utils.formatTimestamp(data.createTime),
+            width: 155
+        }, {
+            Header: 'Actions',
+            id: 'actions',
+            Cell: props => this.getActionBar(props.original),
+            width: 200,
+            filterable: false
+        }];
         this.updateClan = this.updateClan.bind(this);
+        this.getActionBar = this.getActionBar.bind(this);
+        this.init = this.init.bind(this);
     }
 
     componentDidMount() {
-        Api.json().one('clan', this.props.params.clanid).get({ include: 'memberships,memberships.player,founder,leader' })
-            .then(this.setData.bind(this)).catch(error => console.error(error));
+        this.init();
     }
-    componentWillReceiveProps() {
-        // TODO: use state if we are pure react and get rid of DataTable
-        window.location.reload();
+    componentWillReceiveProps(nextProps) {
+        // TODO: make it better?
+        this.init(nextProps.params.clanid);
     }
 
-    componentDidUpdate() {
-        if (!this.state.clan || this.updated) {
-            return;
+    init(clanid) {
+        Api.json().one('clan', clanid || this.props.params.clanid).get({ include: 'memberships,memberships.player,founder,leader' })
+            .then(this.setData.bind(this)).catch(error => console.error(error));
+    }
+
+    getActionBar(membership) {
+        let player = Session.getPlayer();
+        let isLeader = this.isLeader();
+        let me = player != null && player.id == membership.player.id;
+        let leave = (!isLeader && me)
+            ? <Link to={`/action/leaveClan/${this.state.clan.id}`}>
+                <button className="btn btn-primary btn-xs">Leave Clan</button>
+            </Link>
+            : '';
+        let leaderActions = '';
+        if (isLeader && !me) {
+            leaderActions = <div>
+                <Link to={`/action/kick/${membership.id}`}>
+                    <button className="btn btn-primary btn-xs">Kick Member</button>
+                </Link>
+                <Link to={`/action/transferLeadership/${this.state.clan.id}/${membership.player.id}`}>
+                    <button className="btn btn-primary btn-xs">Make Leader</button>
+                </Link>
+            </div>;
         }
-        var dataSet = [];
-        var player = Session.getPlayer();
-        for (let membership of this.state.clan.memberships) {
-            let button = '';
-            let isLeader = this.isLeader();
-            let me = player != null && player.id == membership.player.id;
-            if(!isLeader && me) {
-                button += `<button onclick="window.myHistory.push('/action/leaveClan/${this.state.clan.id}')" class="btn btn-primary btn-xs">Leave Clan</button>`;
-            }
-            if (isLeader && !me) {
-                button += `<button onclick="window.myHistory.push('/action/kick/${membership.id}')" class="btn btn-primary btn-xs">Kick Member</button>`;
-                button += `<button onclick="window.myHistory.push('/action/transferLeadership/${this.state.clan.id}/${membership.player.id}')" class="btn btn-primary btn-xs">Make Leader</button>`;
-            }
-            if(isLeader && me) {
-                button += 'Leader cannot leave';
-            }
-            dataSet.push([membership.player.login, Utils.formatTimestamp(membership.createTime), button]);
-        }
-        // eslint-disable-next-line no-undef
-        $('#clan_members').DataTable({
-            data: dataSet
-        });
-        this.updated = true;
+        let leaderCannotLeave = (isLeader && me) ? 'Leader cannot leave' : '';
+        return <div>{leave}{leaderActions}{leaderCannotLeave}</div>;
     }
 
     setData(data) {
@@ -78,7 +94,7 @@ export default class ClanPage extends React.Component {
 
     isClanMember() {
         let player = Session.getPlayer();
-        if(player == null) {
+        if (player == null) {
             return false;
         }
         let myMembership = _.find(this.state.clan.memberships, (membership) => {
@@ -100,6 +116,7 @@ export default class ClanPage extends React.Component {
             name: this.state.clan.name,
             description: this.state.clan.description
         }).then(() => {
+            // TODO: is this needed?
             this.componentDidMount();
             Toast.getContainer().success('Clan successful updated', 'Clan Data saved');
         }).catch((error) => {
@@ -148,15 +165,11 @@ export default class ClanPage extends React.Component {
     renderClanMembers() {
         return <div className="well">
             <h2>Clan Members</h2>
-            <table id="clan_members" className="table table-striped table-bordered" cellSpacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Joined</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-            </table>
+            <ReactTable
+                columns={this.columns}
+                defaultPageSize={10}
+                data={this.state.clan.memberships}
+            />
             {this.isClanMember() &&
                 <div className="grid">
                     <br />
