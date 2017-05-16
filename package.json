@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "FA Forever Clan App",
   "scripts": {
-    "test": "node_modules/.bin/eslint --ext jsx .",
-    "build": "webpack --progress --colors -p",
+    "test": "eslint --ext jsx .",
+    "build": "webpack -p --progress --colors",
     "start": "node server.js NODE_ENV=production",
-    "dev": "node_modules/.bin/webpack-dev-server --linline --content-base www",
-    "lint": "node_modules/.bin/eslint --fix --ext jsx ."
+    "dev": "webpack-dev-server --linline --content-base www",
+    "lint": "eslint --fix --ext jsx ."
   },
   "devDependencies": {
     "eslint": "^3.13.1",

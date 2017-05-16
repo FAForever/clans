@@ -1,3 +1,9 @@
+// eslint-disable-next-line no-undef
+if (process.env.NODE_ENV == 'production') {
+    console.warn = function () { };
+    console.log = function () { };
+}
+
 export default {
     // env value are injected via webpack.DefinePlugin
     getApiBaseUrl() {
