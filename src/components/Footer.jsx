@@ -10,7 +10,7 @@ export default class Footer extends React.Component {
           <li><a href="http://forums.faforever.com/">Forum</a></li>
           <li><a href="https://github.com/FAForever/clans">Sources</a></li>
           <li><a href="https://github.com/FAForever/clans/issues">Issues</a></li>
-          <li><a href="https://github.com/FAForever/clans/network/members">Authors</a></li>
+          <li><a href="https://github.com/FAForever/clans/graphs/contributors">Authors</a></li>
         </ul>
       </div>
     </footer>
