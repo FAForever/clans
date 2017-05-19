@@ -114,7 +114,8 @@ export default class InvitePlayer extends React.Component {
 
     renderLink() {
         if (this.state.token) {
-            let link = `http://localhost:8080/action/accept#token=${this.state.token}`;
+            // eslint-disable-next-line no-undef
+            let link = `${process.env.OAUTH_REDIRECT_URI}/action/accept#token=${this.state.token}`;
             return <div style={{ marginTop: '15px' }}>
                 <p>3. Copy link to clipboard</p>
                 <div className="grid ">
