@@ -77,6 +77,10 @@ textarea {
 
 // ### react-table ### 
 
+.ReactTable {
+  display: inherit;
+}
+
 .rt-th {
   background-color: $color-header;
 }
