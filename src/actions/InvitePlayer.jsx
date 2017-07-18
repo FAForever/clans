@@ -1,6 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import Autocomplete from 'react-autocomplete';
+import ClipboardButton from 'react-clipboard.js';
 
 import Page from '../components/Page.jsx';
 import InputPair from '../components/InputPair.jsx';
@@ -120,7 +121,12 @@ export default class InvitePlayer extends React.Component {
                 <p>3. Copy link to clipboard</p>
                 <div className="grid ">
                     <span className="col-1-6" >Link</span>
-                    <input id="InviteLink" disabled type="text" className="col-5-6" defaultValue={link} />
+                    <div className="col-5-6 faf-button">
+                        <input id="InviteLink" disabled type="text"  defaultValue={link} className="col-1-1"/>
+                        <ClipboardButton data-clipboard-text={link} className="col-1-1">
+                            <img src="/images/clippy.svg" alt="Copy to Clipboard" width="13"/> Copy to Clipboard
+                        </ClipboardButton>
+                    </div>
                 </div>
                 <p />
                 <p>4. Send the link to the player, e.g. as personal message in faf, over Mumble, ...</p>
