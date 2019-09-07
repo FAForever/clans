@@ -9,7 +9,7 @@ import Api from '../utils/Api.jsx';
 import Utils from '../utils/Utils.jsx';
 
 import jwt from 'jwt-simple';
-import Session from '../utils/Session';
+import Session from '../utils/Session.jsx';
 
 export default class AcceptInvitation extends React.Component {
     constructor(props) {
